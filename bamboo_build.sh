@@ -3,7 +3,8 @@ rm -rf prebuilt
 rm -rf deployment
 mkdir -p prebuilt
 PBBAM=`/bin/ls -t tarballs/pbbam*-x86_64.tgz|head -1`
-HTSLIB=`/bin/ls -t tarballs/htslib-*tgz|head -1`
+curl -s -L http://nexus/repository/maven-snapshots/pacbio/sat/htslib/htslib-1.1-SNAPSHOT.tgz -o tarballs/htslib-1.1-SNAPSHOT.tgz
+HTSLIB=`/bin/ls -t tarballs/htslib-*.tgz|head -1`
 BLASR=`/bin/ls -t tarballs/blasr-*tgz|head -1`
 BLASR_LIBCPP=`/bin/ls -t tarballs/blasr_libcpp*tgz|head -1`
 PBDAGCON=`/bin/ls -t tarballs/pbdagcon-*tgz|head -1`
