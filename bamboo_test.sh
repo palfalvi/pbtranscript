@@ -21,4 +21,4 @@ export PYTHONWARNINGS="ignore"
 nosetests --verbose --with-xunit --xunit-file=pbtranscript_nose.xml \
     ../repos/pbtranscript/tests/unit/*.py
 
-chmod +w -R repos/pbtranscript
+chmod +w -R repos/pbtranscript/tests
