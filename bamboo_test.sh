@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xe
 type module >& /dev/null || . /mnt/software/Modules/current/init/bash
 module load git/2.8.3
 module load gcc/4.9.2
@@ -16,7 +16,7 @@ cat > pbtranscript_dummy.xml << EOF
   </testcase>
 </testsuite>
 EOF
-source pitchfork/deployment/setup-env.sh
+source deployment/setup-env.sh
 export PYTHONWARNINGS="ignore"
 nosetests --verbose --with-xunit --xunit-file=pbtranscript_nose.xml \
     ../repos/pbtranscript/tests/unit/*.py
