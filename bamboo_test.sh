@@ -16,7 +16,7 @@ cat > pbtranscript_dummy.xml << EOF
   </testcase>
 </testsuite>
 EOF
-if [ -e pitchfork/deployment/setup-env.sh ];
+if [ -e pitchfork/deployment/setup-env.sh ]; then
   source pitchfork/deployment/setup-env.sh
 else
   export PATH=$PWD/build/bin:/mnt/software/a/anaconda2/4.2.0/bin:$PATH
