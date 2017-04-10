@@ -16,7 +16,12 @@ cat > pbtranscript_dummy.xml << EOF
   </testcase>
 </testsuite>
 EOF
-source pitchfork/deployment/setup-env.sh
+if [ -e pitchfork/deployment/setup-env.sh ];
+  source pitchfork/deployment/setup-env.sh
+else
+  export PATH=$PWD/build/bin:/mnt/software/a/anaconda2/4.2.0/bin:$PATH
+  export PYTHONUSERBASE=$PWD/build
+fi
 export PYTHONWARNINGS="ignore"
 nosetests --verbose --with-xunit --xunit-file=pbtranscript_nose.xml \
     repos/pbtranscript/tests/unit/*.py
