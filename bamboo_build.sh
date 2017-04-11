@@ -7,16 +7,18 @@ PBBAM=`/bin/ls -t tarballs/pbbam*-x86_64.tgz|head -1`
 BLASR=`/bin/ls -t tarballs/blasr-*tgz|head -1`
 BLASR_LIBCPP=`/bin/ls -t tarballs/blasr_libcpp*tgz|head -1`
 PBDAGCON=`/bin/ls -t tarballs/pbdagcon-*tgz|head -1`
+NX3PBASEURL=http://ossnexus/repository/unsupported/pitchfork/gcc-4.9.2
 
 # download + extract from nexus
 curl -s -L http://ossnexus/repository/maven-snapshots/pacbio/sat/htslib/htslib-1.1-SNAPSHOT.tgz | tar zvxf - -C build
-curl -s -L http://ossnexus/repository/unsupported/pitchfork/gcc-4.9.2/hmmer-3.1b2.tgz           | tar zvxf - -C build
-curl -s -L http://ossnexus/repository/unsupported/pitchfork/gcc-4.9.2/libressl-2.2.5.tgz        | tar zvxf - -C build
-curl -s -L http://ossnexus/repository/unsupported/pitchfork/gcc-4.9.2/zlib-1.2.8.tgz            | tar zvxf - -C build
-curl -s -L http://ossnexus/repository/unsupported/pitchfork/gcc-4.9.2/gmap-2016-11-07.tgz       | tar zvxf - -C build
-curl -s -L http://ossnexus/repository/unsupported/pitchfork/gcc-4.9.2/ncurses-6.0.tgz           | tar zvxf - -C build
-curl -s -L http://ossnexus/repository/unsupported/pitchfork/gcc-4.9.2/samtools-1.3.1.tgz        | tar zvxf - -C build
-curl -s -L http://ossnexus/repository/unsupported/pitchfork/gcc-4.9.2/readline-6.3.tgz          | tar zvxf - -C build
+curl -s -L $NX3PBASEURL/hmmer-3.1b2.tgz           | tar zvxf - -C build
+curl -s -L $NX3PBASEURL/libressl-2.2.5.tgz        | tar zvxf - -C build
+curl -s -L $NX3PBASEURL/zlib-1.2.8.tgz            | tar zvxf - -C build
+curl -s -L $NX3PBASEURL/libbzip2-1.0.6.tgz        | tar zvxf - -C build
+curl -s -L $NX3PBASEURL/gmap-2016-11-07.tgz       | tar zvxf - -C build
+curl -s -L $NX3PBASEURL/ncurses-6.0.tgz           | tar zvxf - -C build
+curl -s -L $NX3PBASEURL/samtools-1.3.1.tgz        | tar zvxf - -C build
+curl -s -L $NX3PBASEURL/readline-6.3.tgz          | tar zvxf - -C build
 curl -s -L http://ossnexus/repository/unsupported/gcc-4.9.2/DAZZ_DB-SNAPSHOT.tgz                | tar zvxf - -C build
 curl -s -L http://ossnexus/repository/unsupported/gcc-4.9.2/DALIGNER-SNAPSHOT.tgz               | tar zvxf - -C build
 
@@ -47,16 +49,22 @@ export PYTHONUSERBASE=$PWD/build
 PIP="pip --cache-dir=$PWD/.pip --disable-pip-version-check"
 
 echo "## Install pip modules"
-NX3PBASEURL=http://nexus/repository/unsupported/pitchfork/gcc-4.9.2
+ConsensusCore_VERSION=`curl -sL http://bitbucket:7990/projects/SAT/repos/consensuscore/raw/setup.py?at=refs%2Fheads%2Fdevelop|grep 'version='|sed -e 's/^.*="//;s/",//'`
+ConsensusCore2_VERSION=`curl -sL http://bitbucket:7990/projects/SAT/repos/unanimity/raw/CMakeLists.txt?at=refs%2Fheads%2Fdevelop|grep 'project.*UNANIMITY.*VERSION'|sed -e 's/project(UNANIMITY VERSION //;s/ LANGUAGES CXX C)//'`
+GenomicConsensus_VERSION=`curl -sL http://bitbucket.nanofluidics.com:7990/projects/SAT/repos/genomicconsensus/raw/GenomicConsensus/__init__.py?at=refs%2Fheads%2Fdevelop|grep __VERSION__|sed -e 's/.*__VERSION__ = "//;s/".*$//'`
 $PIP install --user \
   $NX3PBASEURL/pythonpkgs/pysam-0.9.1.4-cp27-cp27mu-linux_x86_64.whl \
   $NX3PBASEURL/pythonpkgs/xmlbuilder-1.0-cp27-none-any.whl \
   $NX3PBASEURL/pythonpkgs/avro-1.7.7-cp27-none-any.whl \
   iso8601 \
   $NX3PBASEURL/pythonpkgs/tabulate-0.7.5-cp27-none-any.whl \
-  coverage \
+  coverage
+$PIP install --user \
   git+ssh://git@bitbucket.nanofluidics.com:7999/sat/pbcore.git \
   git+ssh://git@bitbucket.nanofluidics.com:7999/sat/pbcoretools.git \
-  git+ssh://git@bitbucket.nanofluidics.com:7999/sl/pbcommand.git
+  git+ssh://git@bitbucket.nanofluidics.com:7999/sl/pbcommand.git \
+  http://ossnexus/repository/unsupported/gcc-4.9.2/pythonpkgs/ConsensusCore-${ConsensusCore_VERSION}-cp27-cp27mu-linux_x86_64.whl \
+  http://ossnexus/repository/unsupported/gcc-4.9.2/pythonpkgs/ConsensusCore2-${ConsensusCore2_VERSION}-cp27-cp27mu-linux_x86_64.whl \
+  http://ossnexus/repository/unsupported/gcc-4.9.2/pythonpkgs/GenomicConsensus-${GenomicConsensus_VERSION}-cp27-cp27mu-linux_x86_64.whl
 $PIP install --user -r repos/pbtranscript/REQUIREMENTS.txt
 $PIP install --user -e repos/pbtranscript

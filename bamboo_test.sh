@@ -1,4 +1,5 @@
 #!/bin/bash -xe
+
 type module >& /dev/null || . /mnt/software/Modules/current/init/bash
 module load git/2.8.3
 module load gcc/4.9.2
