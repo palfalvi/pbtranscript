@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/bash -xe
+
 type module >& /dev/null || . /mnt/software/Modules/current/init/bash
 module load git/2.8.3
 module load gcc/4.9.2
 module load ccache/3.2.3
-module load graphviz
 
 cat > pbtranscript_dummy.xml << EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -16,9 +16,16 @@ cat > pbtranscript_dummy.xml << EOF
   </testcase>
 </testsuite>
 EOF
-source pitchfork/deployment/setup-env.sh
+if [ -e pitchfork/deployment/setup-env.sh ]; then
+  module load graphviz
+  source pitchfork/deployment/setup-env.sh
+else
+  export PATH=$PWD/build/bin:/mnt/software/a/anaconda2/4.2.0/bin:$PATH
+  export PYTHONUSERBASE=$PWD/build
+  export LD_LIBRARY_PATH=$PWD/build/lib:/mnt/software/a/anaconda2/4.2.0/lib:$LD_LIBRARY_PATH
+fi
 export PYTHONWARNINGS="ignore"
 nosetests --verbose --with-xunit --xunit-file=pbtranscript_nose.xml \
-    ../repos/pbtranscript/tests/unit/*.py
+    repos/pbtranscript/tests/unit/*.py
 
-chmod +w -R repos/pbtranscript
+chmod +w -R repos/pbtranscript/tests
