@@ -61,8 +61,9 @@ $PIP install --user \
   coverage
 $PIP install --user \
   git+ssh://git@bitbucket.nanofluidics.com:7999/sat/pbcore.git \
+  git+ssh://git@bitbucket.nanofluidics.com:7999/sl/pbcommand.git
+$PIP install --user \
   git+ssh://git@bitbucket.nanofluidics.com:7999/sat/pbcoretools.git \
-  git+ssh://git@bitbucket.nanofluidics.com:7999/sl/pbcommand.git \
   http://ossnexus/repository/unsupported/gcc-4.9.2/pythonpkgs/ConsensusCore-${ConsensusCore_VERSION}-cp27-cp27mu-linux_x86_64.whl \
   http://ossnexus/repository/unsupported/gcc-4.9.2/pythonpkgs/ConsensusCore2-${ConsensusCore2_VERSION}-cp27-cp27mu-linux_x86_64.whl \
   http://ossnexus/repository/unsupported/gcc-4.9.2/pythonpkgs/GenomicConsensus-${GenomicConsensus_VERSION}-cp27-cp27mu-linux_x86_64.whl
