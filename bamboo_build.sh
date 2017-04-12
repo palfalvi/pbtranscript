@@ -12,7 +12,7 @@ NX3PBASEURL=http://ossnexus/repository/unsupported/pitchfork/gcc-4.9.2
 # download + extract from nexus
 curl -s -L http://ossnexus/repository/maven-snapshots/pacbio/sat/htslib/htslib-1.1-SNAPSHOT.tgz | tar zvxf - -C build
 curl -s -L $NX3PBASEURL/hmmer-3.1b2.tgz           | tar zvxf - -C build
-curl -s -L $NX3PBASEURL/libressl-2.2.5.tgz        | tar zvxf - -C build
+#curl -s -L $NX3PBASEURL/libressl-2.2.5.tgz        | tar zvxf - -C build
 curl -s -L $NX3PBASEURL/zlib-1.2.8.tgz            | tar zvxf - -C build
 curl -s -L $NX3PBASEURL/libbzip2-1.0.6.tgz        | tar zvxf - -C build
 curl -s -L $NX3PBASEURL/gmap-2016-11-07.tgz       | tar zvxf - -C build
@@ -27,8 +27,8 @@ tar zxf $PBBAM        --strip-components 1 -C build
 tar zxf $BLASR        -C build
 tar zxf $BLASR_LIBCPP -C build
 tar zxf $PBDAGCON     -C build
-grep deployment -r build|grep -v ^Binary|awk -F : '{print $1}'|sort -u \
-|xargs sed -i -e "s@/var/lib/bamboo/bamboo-agent-home/xml-data/build-dir/DEP-PFK-JOB1/pitchfork/deployment@$PWD/build@g"
+#grep deployment -r build|grep -v ^Binary|awk -F : '{print $1}'|sort -u \
+#|xargs sed -i -e "s@/var/lib/bamboo/bamboo-agent-home/xml-data/build-dir/DEP-PFK-JOB1/pitchfork/deployment@$PWD/build@g"
 
 # preload software
 type module >& /dev/null || . /mnt/software/Modules/current/init/bash
