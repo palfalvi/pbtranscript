@@ -497,7 +497,7 @@ def get_samtools_version():
     """
     default_sam_version = "0.1.19"
     cmd = 'samtools --version'
-    _out, _code, _msg = backticks(cmd)
+    _out, _code, _msg = backticks(cmd, merge_stderr=False)
     try:
         if "samtools" in _out[0]:
             return str(_out[0][8:]).strip()
