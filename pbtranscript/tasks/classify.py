@@ -93,7 +93,7 @@ def resolved_tool_contract_to_args(resolved_tool_contract):
         "--outDir", op.dirname(rtc.task.output_files[0]),
         "--ignore-empty-output",
     ]
-    if rtc.task.options[Constants.IGNORE_POLYA_ID]:
+    if not rtc.task.options[Constants.REQUIRE_POLYA_ID]:
         args.append("--ignore_polyA")
 
     primers_str_obj = rtc.task.options[Constants.PRIMER_SEQUENCES_ID]

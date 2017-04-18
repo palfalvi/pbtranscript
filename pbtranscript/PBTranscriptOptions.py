@@ -30,8 +30,8 @@ class BaseConstants(object):
     MIN_SEQ_LEN_DEFAULT = 50
     #MIN_SCORE_ID = "pbtranscript.task_options.min_score"
     MIN_SCORE_DEFAULT = 10
-    IGNORE_POLYA_ID = "pbtranscript.task_options.ignore_polya"
-    IGNORE_POLYA_DEFAULT = False
+    REQUIRE_POLYA_ID = "pbtranscript.task_options.require_polya"
+    REQUIRE_POLYA_DEFAULT = True 
     PRIMER_SEQUENCES_ID = "pbtranscript.task_options.primer_sequences"
     PRIMER_SEQUENCES_DEFAULT = ""
 
@@ -67,7 +67,7 @@ def add_classify_arguments(parser):
         name="ConsensusReadSet", description=helpstr)
 
     parser.add_output_file_type(FileTypes.DS_CONTIG, "outReadsFN", # idx 0
-        name="Draft isoforms",
+        name="Draft Isoforms",
         description="Intermediate dataset used to get full-length reads",
         default_name="isoseq_draft")
     tcp = parser.tool_contract_parser
@@ -75,7 +75,7 @@ def add_classify_arguments(parser):
     parser = parser.arg_parser.parser
     helpstr = "Full-length non-chimeric reads generated from pbtranscript classify"
     tcp.add_output_file_type(FileTypes.DS_CONTIG, "flnc", # idx 1
-        name="Full-length non-chimeric reads",
+        name="Full-Length Non-Chimeric Reads",
         description=helpstr,
         default_name="isoseq_flnc")
     parser.add_argument("--flnc",
@@ -91,7 +91,7 @@ def add_classify_arguments(parser):
                         default=None,
                         help=helpstr)
     tcp.add_output_file_type(FileTypes.DS_CONTIG, "nfl", # idx 2
-        name="Non-full-length reads",
+        name="Non-Full-Length Reads",
         description=helpstr,
         default_name="isoseq_nfl")
 
@@ -112,7 +112,7 @@ def add_classify_arguments(parser):
 
     tcp.add_str(BaseConstants.PRIMER_SEQUENCES_ID, "customer_primers",
                 default=BaseConstants.PRIMER_SEQUENCES_DEFAULT,
-                name="Customer primer sequences",
+                name="Customer Primer Sequences",
                 description="Customer primer sequences.")
 
     hmm_group.add_argument("--cpus",
@@ -128,7 +128,7 @@ def add_classify_arguments(parser):
                            help="TXT file to output classsify summary (" +
                                 "default: *.classify_summary.txt")
     tcp.add_output_file_type(FileTypes.JSON, "json_summary",
-        name="Transcript classification report",
+        name="Transcript Classification Report",
         description="JSON summary",
         default_name="summary")
 
@@ -139,7 +139,7 @@ def add_classify_arguments(parser):
                            help="CSV file to output primer info (" +
                                 "default: *.primer_info.csv")
     tcp.add_output_file_type(FileTypes.CSV, "report",
-        name="Primer info",
+        name="Primer Info",
         description="Per-CCS read annotation and classification results",
         default_name="isoseq_primer_info")
 
@@ -207,9 +207,12 @@ def add_classify_arguments(parser):
                             default=False,
                             action="store_true",
                             help=helpstr)
-    tcp.add_boolean(BaseConstants.IGNORE_POLYA_ID, "ignore_polyA",
-        default=BaseConstants.IGNORE_POLYA_DEFAULT,
-        name="Ignore polyA",
+
+    # SAT-1010, avoid double-negative in GUI
+    helpstr = "FL requires polyA tail (default: turned on)"
+    tcp.add_boolean(BaseConstants.REQUIRE_POLYA_ID, "require_polyA",
+        default=BaseConstants.REQUIRE_POLYA_DEFAULT,
+        name="Require polyA",
         description=helpstr)
 
     helpstr = "Reuse previously built dom files by phmmer"
@@ -569,7 +572,7 @@ def add_cluster_summary_report_arguments(parser):
     p2.add_argument("--summary", default=None, type=str,
                         dest="summary_fn", help=helpstr)
     p1.add_output_file_type(FileTypes.JSON, "json_summary",
-        name="Transcript clustering report",
+        name="Transcript Clustering Report",
         description="JSON summary",
         default_name="summary")
 
