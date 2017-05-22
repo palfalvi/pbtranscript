@@ -37,15 +37,15 @@ class Constants(object):
 
     MIN_ALN_COVERAGE_ID = "pbtranscript.task_options.min_gmap_aln_coverage"
     MIN_ALN_COVERAGE_DEFAULT = 0.99
-    MIN_ALN_COVERAGE_DESC = "Min query coverage to analyze a GMAP alignment (default: %s)" % MIN_ALN_COVERAGE_DEFAULT
+    MIN_ALN_COVERAGE_DESC = "Minimum query coverage to analyze a GMAP alignment (default: %s)" % MIN_ALN_COVERAGE_DEFAULT
 
     MIN_ALN_IDENTITY_ID = "pbtranscript.task_options.min_gmap_aln_identity"
     MIN_ALN_IDENTITY_DEFAULT = 0.95
-    MIN_ALN_IDENTITY_DESC = "Min identity to analyze a GMAP alignment (default: %s)" % MIN_ALN_IDENTITY_DEFAULT
+    MIN_ALN_IDENTITY_DESC = "Minimum identity to analyze a GMAP alignment (default: %s)" % MIN_ALN_IDENTITY_DEFAULT
 
     MAX_FUZZY_JUNCTION_ID = "pbtranscript.task_options.max_fuzzy_junction"
     MAX_FUZZY_JUNCTION_DEFAULT = 5
-    MAX_FUZZY_JUNCTION_DESC = "Max edit distance between merge-able fuzzy junctions (default: %s)" % MAX_FUZZY_JUNCTION_DEFAULT
+    MAX_FUZZY_JUNCTION_DESC = "Maximum edit distance between merge-able fuzzy junctions (default: %s)" % MAX_FUZZY_JUNCTION_DEFAULT
 
     # Production isoseq always collapses consensus isoforms, not FLNC reads, default value must be 1
     MIN_FLNC_COVERAGE_DEFAULT = 1
