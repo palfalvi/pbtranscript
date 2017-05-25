@@ -3,7 +3,7 @@ rm -rf prebuild deployment build
 mkdir build
 
 # some bamboo artifacts: better than 0 artifact
-PBBAM=`/bin/ls -t tarballs/pbbam*-x86_64.tgz|head -1`
+PBBAM=`/bin/ls -t tarballs/pbbam-*.tgz|head -1`
 BLASR=`/bin/ls -t tarballs/blasr-*tgz|head -1`
 BLASR_LIBCPP=`/bin/ls -t tarballs/blasr_libcpp*tgz|head -1`
 PBDAGCON=`/bin/ls -t tarballs/pbdagcon-*tgz|head -1`
@@ -21,7 +21,7 @@ curl -sL http://nexus/repository/unsupported/gcc-4.9.2/DAZZ_DB-SNAPSHOT.tgz     
 curl -sL http://nexus/repository/unsupported/gcc-4.9.2/DALIGNER-SNAPSHOT.tgz               | tar zvxf - -C build
 
 # extract from artifacts
-tar zxf $PBBAM        --strip-components 1 -C build
+tar zxf $PBBAM        -C build
 tar zxf $BLASR        -C build
 tar zxf $BLASR_LIBCPP -C build
 tar zxf $PBDAGCON     -C build
