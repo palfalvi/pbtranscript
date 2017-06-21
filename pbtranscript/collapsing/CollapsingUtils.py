@@ -87,6 +87,7 @@ def map_isoforms_and_sort(input_filename, sam_filename,
                 '-z sense_force',
                 '--cross-species',
                 '-f samse',
+                '--max-intronlength-ends 200000', # for long genes
                 gmap_input_filename,
                 '>', unsorted_sam_filename,
                 '2>{log}'.format(log=log_filename)]
