@@ -13,19 +13,31 @@
 
   $ rm -rf $OFA $OD && mkdir -p $OD
   $ pbtranscript cluster $FLNC $OFA -d $OD --bas_fofn $BAS --ccs_fofn $CCS 
-  $ ls $OFA > /dev/null
+  $ ls $OFA > /dev/null && echo $?
+  0
+  $ ls $OD/output/final.consensus.fasta.sensitive.config > /dev/null && echo $?
+  0
 
 # Test pbtranscript cluster, bam input, using finer qvs.
   $ rm -rf $OFA $OD && mkdir -p $OD
   $ pbtranscript cluster $FLNC $OFA -d $OD --bas_fofn $BAS --ccs_fofn $CCS  --use_finer_qv
-  $ ls $OFA > /dev/null
+  $ ls $OFA > /dev/null && echo $?
+  0
+  $ ls $OD/output/final.consensus.fasta.sensitive.config > /dev/null && echo $?
+  0
 
 # Test pbtranscript cluster, bam input, no finer qvs, no quiver.
   $ rm -rf $OFA $OD && mkdir -p $OD
   $ pbtranscript cluster $FLNC $OFA -d $OD --bas_fofn $BAS --ccs_fofn $CCS  --quiver --nfl_fa $NFL
-  $ ls $OFA > /dev/null
+  $ ls $OFA > /dev/null && echo $?
+  0
+  $ ls $OD/output/final.consensus.fasta.sensitive.config > /dev/null && echo $?
+  0
 
 # Test pbtranscript cluster, bam input, using finer qvs, quiver.
   $ rm -rf $OFA $OD && mkdir -p $OD
   $ pbtranscript cluster $FLNC $OFA -d $OD --bas_fofn $BAS --ccs_fofn $CCS  --use_finer_qv --quiver --nfl_fa $NFL
-  $ ls $OFA > /dev/null
+  $ ls $OFA > /dev/null && echo $?
+  0
+  $ ls $OD/output/final.consensus.fasta.sensitive.config > /dev/null && echo $?
+  0
