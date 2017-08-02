@@ -53,9 +53,9 @@ $PIP install --user \
   $NX3PBASEURL/pythonpkgs/pysam-0.9.1.4-cp27-cp27mu-linux_x86_64.whl \
   $NX3PBASEURL/pythonpkgs/xmlbuilder-1.0-cp27-none-any.whl \
   $NX3PBASEURL/pythonpkgs/avro-1.7.7-cp27-none-any.whl \
-  iso8601 \
+  $NX3PBASEURL/pythonpkgs/iso8601-0.1.12-py2.py3-none-any.whl \
   $NX3PBASEURL/pythonpkgs/tabulate-0.7.5-cp27-none-any.whl \
-  coverage
+  http://nexus/repository/unsupported/distfiles/coverage-4.4.1.tar.gz
 $PIP install --user \
   git+ssh://git@bitbucket.nanofluidics.com:7999/sat/pbcore.git \
   git+ssh://git@bitbucket.nanofluidics.com:7999/sl/pbcommand.git
