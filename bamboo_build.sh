@@ -4,7 +4,7 @@ mkdir build
 
 # some bamboo artifacts: better than 0 artifact
 PBBAM=tarballs/pbbam.tgz
-BLASR=tarballs/blasr*tgz
+BLASR=tarballs/blasr.tgz
 BLASR_LIBCPP=tarballs/blasr_libcpp.tgz
 PBDAGCON=`/bin/ls -t tarballs/pbdagcon-*tgz|head -1`
 NX3PBASEURL=http://nexus/repository/unsupported/pitchfork/gcc-4.9.2
