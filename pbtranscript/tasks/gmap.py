@@ -10,7 +10,7 @@ import os.path as op
 import os
 import sys
 
-import pysam
+from ..libs import AlignmentFile, pysam_index
 
 from pbcommand.cli.core import pbparser_runner
 from pbcommand.models import FileTypes, SymbolTypes, get_pbparser
@@ -88,9 +88,9 @@ def run_gmap(transcripts_file, reference_file, alignment_file, nproc):
     sam_file_2 = tempfile.NamedTemporaryFile(suffix=".sam", delete=True).name
     filter_sam(sam_file, sam_file_2)
     os.remove(sam_file)
-    with pysam.AlignmentFile(sam_file_2, "r") as sam_in:
+    with AlignmentFile(sam_file_2, "r") as sam_in:
         log.info("Writing alignments to %s" % alignment_file)
-        with pysam.AlignmentFile(alignment_file, "wb",
+        with AlignmentFile(alignment_file, "wb",
                                  template=sam_in) as bam_out:
             for rec in sam_in:
                 bam_out.write(rec)
@@ -99,7 +99,7 @@ def run_gmap(transcripts_file, reference_file, alignment_file, nproc):
     # (which also makes testing difficult, since we usually run pbvalidate on
     # all outputs)
     #assert subprocess.call(["pbindex", "gmap.aligned.bam"]) == 0
-    pysam.index(alignment_file)
+    pysam_index(alignment_file)
     return 0
 
 
