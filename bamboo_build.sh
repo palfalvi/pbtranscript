@@ -3,14 +3,14 @@ rm -rf prebuild deployment build
 mkdir build
 
 # some bamboo artifacts: better than 0 artifact
-PBBAM=`/bin/ls -t tarballs/pbbam-*.tgz|head -1`
-BLASR=`/bin/ls -t tarballs/blasr-*tgz|head -1`
-BLASR_LIBCPP=`/bin/ls -t tarballs/blasr_libcpp*tgz|head -1`
+PBBAM=tarballs/pbbam.tgz
+BLASR=tarballs/blasr*tgz
+BLASR_LIBCPP=tarballs/blasr_libcpp.tgz
 PBDAGCON=`/bin/ls -t tarballs/pbdagcon-*tgz|head -1`
 NX3PBASEURL=http://nexus/repository/unsupported/pitchfork/gcc-4.9.2
 
 # download + extract from nexus
-curl -sL http://nexus/repository/maven-snapshots/pacbio/sat/htslib/htslib-1.1-SNAPSHOT.tgz | tar zvxf - -C build
+#curl -sL http://nexus/repository/maven-snapshots/pacbio/sat/htslib/htslib-1.1-SNAPSHOT.tgz | tar zvxf - -C build
 curl -sL $NX3PBASEURL/hmmer-3.1b2.tgz           | tar zvxf - -C build
 curl -sL $NX3PBASEURL/zlib-1.2.8.tgz            | tar zvxf - -C build
 curl -sL $NX3PBASEURL/libbzip2-1.0.6.tgz        | tar zvxf - -C build
@@ -31,6 +31,7 @@ type module >& /dev/null || . /mnt/software/Modules/current/init/bash
 module load git/2.8.3
 module load gcc/4.9.2
 module load ccache/3.2.3
+module load htslib/1.3.1
 CXX="$CXX -static-libstdc++"
 GXX="$CXX"
 export CXX GXX
