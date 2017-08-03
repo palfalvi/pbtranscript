@@ -9,7 +9,7 @@ import time
 from cPickle import dump, load
 from collections import defaultdict
 import numpy as np
-import pysam
+from ..libs import Samfile
 from pbcore.util.Process import backticks
 from pbcore.io import FastaReader, FastaWriter, FastqWriter, \
         BasH5Reader, ContigSet
@@ -548,7 +548,7 @@ def is_blank_bam(bamfile):
     return True if the BAM file only has @xx header and NO alignment
     """
     try:
-        with pysam.Samfile(bamfile, 'rb', check_sq=False) as f:
+        with Samfile(bamfile, 'rb', check_sq=False) as f:
             f.next()
         f.close()
     except StopIteration:
@@ -640,11 +640,11 @@ def concat_bam_header(in_fns, out_fn=None):
     from pbtranscript.io import BamHeader
     h = BamHeader(ignore_pg=True)
     for in_fn in in_fns:
-        s = pysam.Samfile(in_fn, 'rb')
+        s = Samfile(in_fn, 'rb')
         h.add(s.header)
         s.close()
     if out_fn is not None:
-        o = pysam.Samfile(out_fn, 'wh', header=h.header)
+        o = Samfile(out_fn, 'wh', header=h.header)
         o.close()
     return h
 
@@ -657,7 +657,7 @@ def concat_bam(in_fns, out_fn):
     h = concat_bam_header(in_fns)
     o = BamWriter(out_fn, header=h)
     for index, in_fn in enumerate(in_fns):
-        s = pysam.Samfile(in_fn, 'rb')
+        s = Samfile(in_fn, 'rb')
         for r in s:
             r.tid = index # Overwrite tid !!!
             o.write(r)
