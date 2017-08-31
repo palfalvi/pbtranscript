@@ -343,7 +343,7 @@ class IceIterative(IceFiles):
 
     def write_final_consensus(self):
         """
-        Write output to final.consensus.fasta
+        Write output to final.consensus.fasta, make dazz db and create final.consensus.fasta.sensitive.config
         Write output to final.consensus.fasta.sa -> no longer needed, replaced by daligner
         """
         msg = "Writing final consensus isoforms to " + \
@@ -352,7 +352,11 @@ class IceIterative(IceFiles):
 
         self.write_consensus(fasta_filename=self.final_consensus_fa)
 
+        self.add_log("Making dazz db for %r" % (self.final_consensus_fa), level=logging.INFO)
         DazzIDHandler(self.final_consensus_fa, converted=False) # make dazz db.
+
+        self.add_log("Writing daligner sensitive config for %r" % (self.final_consensus_fa), level=logging.INFO)
+        self.ice_opts._write_config(fasta_filename=self.final_consensus_fa)
 
     def write_consensus(self, fasta_filename):
         """
@@ -472,7 +476,7 @@ class IceIterative(IceFiles):
         # TODO: handle failed qsub jobs separately
         while len(self.unrun_cids) > 0 and self.iterNum <= 100:
             msg = "NEED to run gcon for {n} clusters: {cid}.".format(
-                n=len(self.unrun_cids), cid=",".format(self.unrun_cids))
+                    n=len(self.unrun_cids), cid=",".join([str(c) for c in self.unrun_cids]))
             self.add_log(msg)
             _cids = list(self.unrun_cids)
             self.unrun_cids = []
@@ -1529,7 +1533,7 @@ class IceIterative(IceFiles):
        # Write final pickle
         self.write_final_pickle()
 
-        # write final consensus.fasta and final_consensus.fasta.sa
+        # write final consensus.fasta, make dazz db and its sensitive config
         self.write_final_consensus()
 
         # Write a csv report: line = read cluster
