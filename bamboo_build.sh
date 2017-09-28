@@ -7,7 +7,7 @@ PBBAM=tarballs/pbbam.tgz
 BLASR=tarballs/blasr.tgz
 BLASR_LIBCPP=tarballs/blasr_libcpp.tgz
 PBDAGCON=`/bin/ls -t tarballs/pbdagcon-*tgz|head -1`
-NX3PBASEURL=http://nexus/repository/unsupported/pitchfork/gcc-4.9.2
+NX3PBASEURL=http://nexus/repository/unsupported/pitchfork/gcc-6.4.0
 
 # download + extract from nexus
 #curl -sL http://nexus/repository/maven-snapshots/pacbio/sat/htslib/htslib-1.1-SNAPSHOT.tgz | tar zvxf - -C build
@@ -17,8 +17,8 @@ curl -sL $NX3PBASEURL/libbzip2-1.0.6.tgz        | tar zvxf - -C build
 curl -sL $NX3PBASEURL/gmap-2016-11-07.tgz       | tar zvxf - -C build
 curl -sL $NX3PBASEURL/ncurses-6.0.tgz           | tar zvxf - -C build
 curl -sL $NX3PBASEURL/samtools-1.3.1.tgz        | tar zvxf - -C build
-curl -sL http://nexus/repository/unsupported/gcc-4.9.2/DAZZ_DB-SNAPSHOT.tgz                | tar zvxf - -C build
-curl -sL http://nexus/repository/unsupported/gcc-4.9.2/DALIGNER-SNAPSHOT.tgz               | tar zvxf - -C build
+curl -sL http://nexus/repository/unsupported/gcc-6.4.0/DAZZ_DB-SNAPSHOT.tgz                | tar zvxf - -C build
+curl -sL http://nexus/repository/unsupported/gcc-6.4.0/DALIGNER-SNAPSHOT.tgz               | tar zvxf - -C build
 
 # extract from artifacts
 tar zxf $PBBAM        -C build
@@ -29,7 +29,7 @@ tar zxf $PBDAGCON     -C build
 # preload software
 type module >& /dev/null || . /mnt/software/Modules/current/init/bash
 module load git/2.8.3
-module load gcc/4.9.2
+module load gcc/6.4.0
 module load ccache/3.2.3
 module load htslib/1.3.1
 CXX="$CXX -static-libstdc++"
