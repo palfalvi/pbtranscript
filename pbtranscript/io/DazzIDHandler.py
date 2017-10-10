@@ -13,7 +13,7 @@ import os.path as op
 from cPickle import load, dump
 from pbcore.io import FastaWriter
 from pbtranscript.io.ContigSetReaderWrapper import ContigSetReaderWrapper
-from pbtranscript.Utils import execute, realpath, nfs_exists
+from pbtranscript.Utils import execute, realpath, nfs_exists, real_upath
 
 __author__ = 'etseng@pacificbiosciences.com'
 
@@ -165,13 +165,14 @@ class DazzIDHandler(object):
             raise RuntimeError("%s hasn't been converted to daligner-compatible format." %
                                self.input_filename)
         if op.exists(self.db_filename):
-            cmd = "DBrm %s" % self.dazz_filename
+            cmd = "DBrm %s" % real_upath(self.dazz_filename)
             execute(cmd=cmd)
 
-        cmd = "fasta2DB %s %s " % (self.dazz_filename, self.dazz_filename)
+        cmd = "fasta2DB %s %s " % (real_upath(self.dazz_filename),
+                                   real_upath(self.dazz_filename))
         execute(cmd=cmd)
 
-        cmd = "DBsplit -s200 %s" % self.dazz_filename
+        cmd = "DBsplit -s200 %s" % real_upath(self.dazz_filename)
         execute(cmd)
 
     def keys(self):

@@ -1,4 +1,5 @@
 """Test classes defined within pbtranscript.collapsing.CollaspingUtils."""
+import os
 import unittest
 import os.path as op
 from pbtranscript.Utils import rmpath, mkdir
@@ -10,7 +11,7 @@ from test_setpath import DATA_DIR, OUT_DIR, SIV_DATA_DIR
 
 _SIV_DIR_ = op.join(SIV_DATA_DIR, "test_collapsing")
 _DAT_DIR_ = op.join(DATA_DIR, "test_collapsing")
-_OUT_DIR_ = op.join(OUT_DIR, "test_collapsing")
+_OUT_DIR_ = op.join(OUT_DIR, "test collapsing")
 
 GMAP_INPUT_FASTA = op.join(_SIV_DIR_, 'gmap-input.fasta')
 GMAP_INPUT_FASTQ = op.join(_SIV_DIR_, 'gmap-input.fastq')
@@ -28,10 +29,12 @@ class TEST_CollapsingUtils(unittest.TestCase):
         """Define input and output file."""
         rmpath(_OUT_DIR_)
         mkdir(_OUT_DIR_)
+        self.gmap_db_dir = op.join(_OUT_DIR_, 'gmap db dir')
+        os.symlink(GMAP_DB, self.gmap_db_dir)
 
     def test_copy_sam_header(self):
         """Test copy_sam_header"""
-        out_fn = op.join(_OUT_DIR_, 'test_copy_sam_header.sam')
+        out_fn = op.join(_OUT_DIR_, 'test copy_sam_header.sam')
         copy_sam_header(GMAP_SAM, out_fn)
         with open(out_fn, 'r') as reader:
             lines = [r for r in reader]
@@ -40,38 +43,38 @@ class TEST_CollapsingUtils(unittest.TestCase):
 
     def test_map_isoforms_and_sort(self):
         """Test map_isoforms_and_sort"""
-        out_fn = op.join(_OUT_DIR_, 'test_map_isoforms_and_sort_fasta.sam')
+        out_fn = op.join(_OUT_DIR_, 'test map_isoforms_and_sort_fasta.sam')
         rmpath(out_fn)
         map_isoforms_and_sort(input_filename=GMAP_INPUT_FASTA,
                               sam_filename=out_fn,
-                              gmap_db_dir=GMAP_DB,
+                              gmap_db_dir=self.gmap_db_dir,
                               gmap_db_name=GMAP_NAME,
                               gmap_nproc=10)
         self.assertTrue(op.exists(out_fn))
 
-        out_fn = op.join(_OUT_DIR_, 'test_map_isoforms_and_sort_fastq.sam')
+        out_fn = op.join(_OUT_DIR_, 'test map_isoforms_and_sort_fastq.sam')
         rmpath(out_fn)
         map_isoforms_and_sort(input_filename=GMAP_INPUT_FASTQ,
                               sam_filename=out_fn,
-                              gmap_db_dir=GMAP_DB,
+                              gmap_db_dir=self.gmap_db_dir,
                               gmap_db_name=GMAP_NAME,
                               gmap_nproc=10)
         self.assertTrue(op.exists(out_fn))
 
-        out_fn = op.join(_OUT_DIR_, 'test_map_isoforms_and_sort_fasta_ds.sam')
+        out_fn = op.join(_OUT_DIR_, 'test map_isoforms_and_sort_fasta_ds.sam')
         rmpath(out_fn)
         map_isoforms_and_sort(input_filename=GMAP_INPUT_FASTA_DS,
                               sam_filename=out_fn,
-                              gmap_db_dir=GMAP_DB,
+                              gmap_db_dir=self.gmap_db_dir,
                               gmap_db_name=GMAP_NAME,
                               gmap_nproc=10)
         self.assertTrue(op.exists(out_fn))
 
-        out_fn = op.join(_OUT_DIR_, 'test_map_isoforms_and_sort_fastq_ds.sam')
+        out_fn = op.join(_OUT_DIR_, 'test map_isoforms_and_sort_fastq_ds.sam')
         rmpath(out_fn)
         map_isoforms_and_sort(input_filename=GMAP_INPUT_FASTQ_DS,
                               sam_filename=out_fn,
-                              gmap_db_dir=GMAP_DB,
+                              gmap_db_dir=self.gmap_db_dir,
                               gmap_db_name=GMAP_NAME,
                               gmap_nproc=10)
         self.assertTrue(op.exists(out_fn))
@@ -80,7 +83,7 @@ class TEST_CollapsingUtils(unittest.TestCase):
         """Test concatenate_sam(in_sam_files, out_sam)"""
         in_sam_files = [op.join(_SIV_DIR_, f)
                         for f in ["chunk0.sam", "chunk1.sam"]]
-        out_sam = op.join(_OUT_DIR_, 'concatenated.sam')
+        out_sam = op.join(_OUT_DIR_, 'test concatenated.sam')
         expected_sam = op.join(_SIV_DIR_, "sorted-gmap-output.sam")
         concatenate_sam(in_sam_files, out_sam)
 
