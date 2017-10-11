@@ -135,7 +135,7 @@ def mkdir(path):
 def rmpath(path):
     """Remove a file or a directory"""
     if op.exists(path):
-        execute("chmod +w -R %s && rm -rf %s" % (path, path))
+        execute("chmod +w -R %s && rm -rf %s" % (real_upath(path), real_upath(path)))
 
 
 def mknewdir(path):
@@ -431,7 +431,7 @@ def ln(src, dst):
 def mv(src, dst):
     """move src file to dst"""
     if realpath(src) != realpath(dst):
-        execute("mv %s %s" % (src, dst))
+        execute("mv %s %s" % (real_upath(src), real_upath(dst)))
 
 
 def make_pbi(bam_fn, force_make=True):

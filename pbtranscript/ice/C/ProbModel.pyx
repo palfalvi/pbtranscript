@@ -58,7 +58,7 @@ class ProbFromFastq:
 
     def calc_prob_from_aln(self, qID, qStart, qEnd, fakecigar):
         """
-        aln_record is a pysam.AlignedRead
+        aln_record is a pysam AlignedRead
         """
         prob_err = self.qver.get(qID, None)
         return calc_aln_log_prob2(prob_err, len(prob_err), list(fakecigar), 

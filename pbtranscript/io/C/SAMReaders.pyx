@@ -2,10 +2,10 @@
 Define classes to represent SAM records and read SAM records.
 """
 from collections import namedtuple
-import pysam
 import logging
 
 from pbtranscript.io.PbiBamIO import BamHeader
+from pbtranscript.libs import Samfile
 
 # __author__ = "etseng@pacificbiosciences.com"
 
@@ -300,7 +300,7 @@ class GMAPSAMReader(object):
     """
     def __init__(self, filename, ref_len_dict=None, query_len_dict=None):
         self.filename = filename
-        self._sam_file = pysam.Samfile(filename, 'r')
+        self._sam_file = Samfile(filename, 'r')
         self.header = BamHeader(headers=self._sam_file.header, ignore_pg=True)
 
         if ref_len_dict is not None:

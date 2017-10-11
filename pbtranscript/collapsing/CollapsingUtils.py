@@ -16,7 +16,7 @@ import string
 from collections import defaultdict
 import numpy as np
 from pbcore.io import FastaWriter, FastqWriter, ContigSet
-from pbtranscript.Utils import execute, rmpath, as_contigset, realpath
+from pbtranscript.Utils import execute, rmpath, as_contigset, realpath, real_upath
 from pbtranscript.io import ContigSetReaderWrapper, FastaRandomReader, FastqRandomReader, \
     CollapseGffRecord, CollapseGffReader, CollapseGffWriter, \
     GroupRecord, GroupReader, GroupWriter, parse_ds_filename
@@ -76,20 +76,21 @@ def map_isoforms_and_sort(input_filename, sam_filename,
 
     # In order to prevent mount issues, cd to ${gmap_db_dir} and ls ${gmap_db_name}.* files
     cwd = realpath(os.getcwd())
-    cmd_args = ['cd %s' % op.join(gmap_db_dir, gmap_db_name),
-                'ls *.iit *meta', 'sleep 3', 'cd %s' % cwd]
+    cmd_args = ['cd %s' % real_upath(op.join(gmap_db_dir, gmap_db_name)),
+                'ls *.iit *meta', 'sleep 3', 'cd %s' % real_upath(cwd)]
     execute(' && '.join(cmd_args))
 
-    cmd_args = ['gmap', '-D {d}'.format(d=gmap_db_dir),
+    cmd_args = ['gmap', '-D {d}'.format(d=real_upath(gmap_db_dir)),
                 '-d {name}'.format(name=gmap_db_name),
                 '-t {nproc}'.format(nproc=gmap_nproc),
                 '-n 0',
                 '-z sense_force',
                 '--cross-species',
                 '-f samse',
-                gmap_input_filename,
-                '>', unsorted_sam_filename,
-                '2>{log}'.format(log=log_filename)]
+                '--max-intronlength-ends 200000', # for long genes
+                real_upath(gmap_input_filename),
+                '>', real_upath(unsorted_sam_filename),
+                '2>{log}'.format(log=real_upath(log_filename))]
     # Call gmap to map isoforms to reference and output sam.
     try:
         execute(' '.join(cmd_args))
@@ -113,8 +114,8 @@ def sort_sam(in_sam, out_sam):
     copy_sam_header(in_sam=in_sam, out_sam=out_sam)
 
     # Call sort to sort gmap output sam file
-    cmd_args = ['sort', '-k 3,3', '-k 4,4n', in_sam,
-                '| grep -v \'^@\' ', ' >> ', out_sam]
+    cmd_args = ['sort', '-k 3,3', '-k 4,4n', real_upath(in_sam),
+                '| grep -v \'^@\' ', ' >> ', real_upath(out_sam)]
 
     if os.stat(in_sam).st_size == 0: # overwrite cmds if file is empty
         cmd_args = ['touch', out_sam]

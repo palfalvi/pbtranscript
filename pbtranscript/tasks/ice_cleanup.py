@@ -14,7 +14,7 @@ from pbcommand.cli.core import pbparser_runner
 from pbcommand.models import FileTypes
 from pbcommand.utils import setup_log
 
-from pbtranscript.Utils import execute
+from pbtranscript.Utils import execute, real_upath
 from pbtranscript.ice.IceFiles import IceFiles
 from pbtranscript.PBTranscriptOptions import get_base_contract_parser
 from pbtranscript.tasks.TPickles import ChunkTasksPickle, ClusterChunkTask
@@ -75,12 +75,12 @@ def resolved_tool_contract_runner(rtc):
             tmp_dir = icef.tmp_dir
             log.info("Cleaning up, removing %s", tmp_dir)
             writer.write("removing %s\n" % tmp_dir)
-            execute("rm -rf %s" % tmp_dir)
+            execute("rm -rf %s" % real_upath(tmp_dir))
 
             quivered_dir = icef.quivered_dir
             log.info("Cleaning up, removing %s", quivered_dir)
             writer.write("removing %s\n" % quivered_dir)
-            execute("rm -rf %s" % quivered_dir)
+            execute("rm -rf %s" % real_upath(quivered_dir))
 
 
 def main():

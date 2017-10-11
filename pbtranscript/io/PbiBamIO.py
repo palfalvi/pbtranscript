@@ -6,7 +6,8 @@ files, and for writing bam files.
 
 import os.path as op
 import numpy as np
-import pysam
+
+from ..libs import AlignmentFile, AlignedSegment, array_to_qualitystring
 
 from pbcore.io import (SubreadSet, ConsensusReadSet,
                        ContigSet, FastaReader, openDataFile, openDataSet, IndexedBamReader)
@@ -180,7 +181,7 @@ class BamZmwRead(object):
 
     @property
     def alignedSegment(self):
-        """Return a pysam.calignmentfile.AlignedSegment
+        """Return a pysam AlignedSegment
         object which is associated with this record.
         """
         return self.bamRecord.peer
@@ -240,7 +241,7 @@ class BamZmwRead(object):
     def Clip(self, readStart, readEnd):
         """
         Clip this read to [readStart:readEnd), and return a copy of
-        pysam.calignmentfile.AlignedSegment object.
+        pysam AlignedSegment object.
         Assume that read.bamRecord.peer is an unmapped AlignedSegment.
         """
         new_query_name = "%s/%s/%d_%d" % (self.movieName, self.holeNumber,
@@ -253,8 +254,8 @@ class BamZmwRead(object):
         s, e = readStart - self.readStart, readEnd - self.readStart
         QV_TAGS = ["iq", "dq", "dt", "st", "sq", "mq", "ip", "pw"]
 
-        # Create an unaligned pysam.AlignedSegment object.
-        ret = pysam.AlignedSegment()
+        # Create an unaligned AlignedSegment object.
+        ret = AlignedSegment()
         ret.query_name = new_query_name
 
         peer = self.bamRecord.peer
@@ -279,7 +280,7 @@ class BamZmwRead(object):
         if peer.query_qualities is None:
             ret.query_qualities = None
         else:
-            ret.query_qualities = pysam.array_to_qualitystring(peer.query_qualities)[s:e]
+            ret.query_qualities = array_to_qualitystring(peer.query_qualities)[s:e]
 
         tags = peer.tags[::]
         for index, (tag_name, tag_val) in enumerate(tags):
@@ -608,9 +609,9 @@ class BamWriter(object):
     def __init__(self, fname, header):
         self.filename = op.abspath(op.expanduser(fname))
         if isinstance(header, dict):
-            self.peer = pysam.AlignmentFile(fname, "wb", header=header)
+            self.peer = AlignmentFile(fname, "wb", header=header)
         elif isinstance(header, BamHeader):
-            self.peer = pysam.AlignmentFile(fname, "wb", header=header.header)
+            self.peer = AlignmentFile(fname, "wb", header=header.header)
         else:
             raise ValueError("<%s, __init__(fname, header)> " %
                              self.__class__.__name__ +
@@ -623,17 +624,12 @@ class BamWriter(object):
     def write(self, record):
         """Write a record or a list of records.
         If record type is one of the followings,
-            * pysam.calignmentfile.AlignedSegment
+            * pysam AlignedSegment
             * BamZmwRead
             * BamCCSZmwRead
         write this record.
         """
-        # workaround for changes to the internal structure of pysam -
-        # could probably be improved upon
-        segment_class = getattr(pysam.calignmentfile, "AlignedSegment", None)
-        if segment_class is None:
-            segment_class = pysam.calignedsegment.AlignedSegment
-        if isinstance(record, segment_class):
+        if isinstance(record, AlignedSegment):
             self.peer.write(record)
         elif isinstance(record, BamCCSZmwRead) or \
              isinstance(record, BamZmwRead):

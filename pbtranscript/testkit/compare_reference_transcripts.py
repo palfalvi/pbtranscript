@@ -12,7 +12,7 @@ import sys
 
 from pbcore.io import FastaReader, FastqReader, FastaWriter
 from pbtranscript.io import BLASRM5Reader
-from pbtranscript.Utils import execute, realpath
+from pbtranscript.Utils import execute, realpath, real_upath
 
 
 def is_fuzzy(r, max_fuzzy_junction):
@@ -63,7 +63,9 @@ class CompareReferenceTranscripts(object):
         """Map isoforms to reference transcripts."""
         m5out = self.output_analysis_fn + ".blasr.out.m5"
         cmd = 'blasr %s %s --bestn 1 -m 5 --out %s' % \
-              (self.isoseq_output_fa, self.reference_transcripts_fn, m5out)
+              (real_upath(self.isoseq_output_fa),
+               real_upath(self.reference_transcripts_fn),
+               real_upath(m5out))
         execute(cmd)
         return [r for r in BLASRM5Reader(m5out)]
 

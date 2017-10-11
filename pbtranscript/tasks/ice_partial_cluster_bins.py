@@ -4,7 +4,7 @@
 For calls 'ice_partial.py one' to process all
 PartialChunkTask objects in input pickle.
 """
-
+import os.path as op
 import logging
 import sys
 
@@ -60,6 +60,7 @@ def args_runner(args):
 def task_runner(task, ccs_file, nproc, tmp_dir):
     """Given PartialChunkTask, run"""
     assert isinstance(task, PartialChunkTask)
+    assert op.exists("%s.sensitive.config" % task.consensus_isoforms_file)
     return IcePartialOne(input_fasta=task.nfl_file,
                          ref_fasta=task.consensus_isoforms_file,
                          ccs_fofn=ccs_file,

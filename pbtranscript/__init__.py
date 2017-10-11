@@ -30,34 +30,7 @@
 from __future__ import absolute_import
 
 
-# $Date: 2015/03/21 $
-# $Revision: Update version number from 0.2.0 to 1.0.0 $
-
-
-_changelist = "$Change: 177900 $"
-
-
-def _get_changelist(perforce_str):
-    """Extract change list from p4 str"""
-    import re
-    rx = re.compile(r'Change: (\d+)')
-    match = rx.search(perforce_str)
-    if match is None:
-        v = 'UnknownChangelist'
-    else:
-        try:
-            v = int(match.group(1))
-        except (TypeError, IndexError):
-            v = "UnknownChangelist"
-    return v
-
-
-def get_changelist():
-    """Return changelist"""
-    return _get_changelist(_changelist)
-
-
-VERSION = (1, 0, 0, get_changelist())
+VERSION = (1, 0, 1, 'TAG-1470')
 
 
 def get_version():

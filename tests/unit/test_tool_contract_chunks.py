@@ -95,6 +95,7 @@ def make_pickle(in_pickle, out_pickle, root_dir,
         """Copy task.files to new_task.files."""
         if copy_consensus_isoforms is True and new_task.consensus_isoforms_file not in copied_files:
             shutil.copy(task.consensus_isoforms_file, new_task.consensus_isoforms_file)
+            shutil.copy(task.consensus_isoforms_file+'.sensitive.config', new_task.consensus_isoforms_file+'.sensitive.config')
             copied_files[new_task.consensus_isoforms_file] = True
         if copy_flnc_pickle is True and new_task.flnc_pickle not in copied_files:
             mkdir(op.dirname(new_task.flnc_pickle))
