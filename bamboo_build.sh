@@ -1,4 +1,5 @@
-#!/bin/bash -xe
+#!/bin/bash
+set -vex
 rm -rf prebuild deployment build
 mkdir build
 
@@ -61,8 +62,8 @@ $PIP install --user \
   git+ssh://git@bitbucket.nanofluidics.com:7999/sl/pbcommand.git
 $PIP install --user \
   git+ssh://git@bitbucket.nanofluidics.com:7999/sat/pbcoretools.git \
-  http://nexus/repository/unsupported/gcc-4.9.2/pythonpkgs/ConsensusCore-${ConsensusCore_VERSION}-cp27-cp27mu-linux_x86_64.whl \
-  http://nexus/repository/unsupported/gcc-4.9.2/pythonpkgs/ConsensusCore2-${ConsensusCore2_VERSION}-cp27-cp27mu-linux_x86_64.whl \
-  http://nexus/repository/unsupported/gcc-4.9.2/pythonpkgs/GenomicConsensus-${GenomicConsensus_VERSION}-cp27-cp27mu-linux_x86_64.whl
+  http://nexus/repository/unsupported/gcc-6.4.0/pythonpkgs/ConsensusCore-${ConsensusCore_VERSION}-cp27-cp27mu-linux_x86_64.whl \
+  http://nexus/repository/unsupported/gcc-6.4.0/pythonpkgs/ConsensusCore2-${ConsensusCore2_VERSION}-cp27-cp27mu-linux_x86_64.whl \
+  http://nexus/repository/unsupported/gcc-6.4.0/pythonpkgs/GenomicConsensus-${GenomicConsensus_VERSION}-cp27-cp27mu-linux_x86_64.whl
 $PIP install --user -r repos/pbtranscript/REQUIREMENTS.txt
 $PIP install --user -e repos/pbtranscript
