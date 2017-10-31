@@ -104,7 +104,7 @@ class CountRunner(object):
         ret = []
         for sample_prefix, cluster_out_d in self.prefix_dict.iteritems():
             sample_prefix = sample_prefix if not sample_prefix.endswith('|') else sample_prefix[0:-1]
-            fl_fn = IceFiles(prog_name="Count", root_dir=cluster_out_d, no_log_f=True).final_pickle_fn
+            fl_fn = IceFiles(prog_name="Count", root_dir=cluster_out_d, no_log_f=True, make_dirs=False).final_pickle_fn
             if not op.exists(fl_fn):
                 raise IOError("FL pickle %s of sample prefix %s does not exist." %
                               (fl_fn, sample_prefix))
@@ -117,7 +117,7 @@ class CountRunner(object):
         ret = []
         for sample_prefix, cluster_out_d in self.prefix_dict.iteritems():
             sample_prefix = sample_prefix if not sample_prefix.endswith('|') else sample_prefix[0:-1]
-            nfl_fn = IceFiles(prog_name="Count", root_dir=cluster_out_d, no_log_f=True).nfl_all_pickle_fn
+            nfl_fn = IceFiles(prog_name="Count", root_dir=cluster_out_d, no_log_f=True, make_dirs=False).nfl_all_pickle_fn
             if not op.exists(nfl_fn):
                 raise IOError("NFL pickle %s of sample prefix %s does not exist." %
                               (nfl_fn, sample_prefix))
