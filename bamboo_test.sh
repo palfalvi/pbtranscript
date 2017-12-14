@@ -1,9 +1,11 @@
 #!/bin/bash -xe
 
 type module >& /dev/null || . /mnt/software/Modules/current/init/bash
-module load git/2.8.3
-module load gcc/4.9.2
-module load ccache/3.2.3
+module load git
+module load gcc
+module load ccache
+module load htslib
+module load hdf5-tools
 
 cat > pbtranscript_dummy.xml << EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -25,6 +27,8 @@ else
   export LD_LIBRARY_PATH=$PWD/build/lib:/mnt/software/a/anaconda2/4.2.0/lib:$LD_LIBRARY_PATH
 fi
 export PYTHONWARNINGS="ignore"
+# for debug purpose
+blasr --version
 nosetests --verbose --with-xunit --xunit-file=pbtranscript_nose.xml \
     repos/pbtranscript/tests/unit/*.py
 
