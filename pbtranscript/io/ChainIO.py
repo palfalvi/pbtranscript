@@ -2,6 +2,7 @@
 """
 Class ChainConfig, read and write Chain config file.
 """
+from __future__ import print_function
 
 import os.path as op
 from collections import namedtuple
@@ -101,6 +102,6 @@ class ChainConfig(object):
             with open(o_cfg_fn, 'w') as writer:
                 writer.write(self.__str__())
         else:
-            print self.__str__()
+            print(self.__str__())
 
 

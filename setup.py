@@ -1,3 +1,4 @@
+from __future__ import print_function
 from setuptools import setup, find_packages
 from distutils.extension import Extension
 import os.path
@@ -71,13 +72,13 @@ def check_program(program):
         else:
             return False
     except (IndexError, ValueError, AttributeError):
-        print >> sys.stderr, '%s is required, please install %s' % program
+        print('%s is required, please install %s' % program, file=sys.stderr)
         return False
 
 
 def exit_if_not_installed(program):
     if (not check_program(program=program)):
-        print >> sys.stderr, 'Unable to install - %s must be installed and in the PATH variable' % program
+        print('Unable to install - %s must be installed and in the PATH variable' % program, file=sys.stderr)
         sys.exit(1)
 
 

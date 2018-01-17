@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import unittest
 import os.path as op
 import filecmp
@@ -52,8 +53,8 @@ class TestDalignerRunner(unittest.TestCase):
                                 t=self.target_filename[0:-6] + ".dazz.fasta",
                                 k=k))
                     for k in ('N0', 'N1', 'N2', 'N3')]
-        print 'las_filenames\n'
-        print expected
+        print('las_filenames\n')
+        print(expected)
         self.assertEqual(self.runner.las_filenames, expected)
 
     def test_la4ice_filenames(self):
@@ -79,11 +80,11 @@ class TestDalignerRunner(unittest.TestCase):
             self.runner.run(output_dir=self.out_dir)
 
             for las_filename in self.runner.las_filenames:
-                print "Checking existance of " + las_filename
+                print("Checking existance of " + las_filename)
                 self.assertTrue(op.exists(las_filename))
 
             for la4ice_filename in self.runner.la4ice_filenames:
-                print "Checking existance of " + la4ice_filename
+                print("Checking existance of " + la4ice_filename)
                 self.assertTrue(op.exists(la4ice_filename))
 
         # Run locally
@@ -92,20 +93,20 @@ class TestDalignerRunner(unittest.TestCase):
         self.runner.run(output_dir=self.out_dir)
 
         for las_filename in self.runner.las_filenames:
-            print "Checking existance of " + las_filename
+            print("Checking existance of " + las_filename)
             self.assertTrue(op.exists(las_filename))
 
         for la4ice_filename in self.runner.la4ice_filenames:
-            print "Checking existance of " + la4ice_filename
+            print("Checking existance of " + la4ice_filename)
             self.assertTrue(op.exists(la4ice_filename))
 
         # clean all output
         self.runner.clean_run()
 
         for las_filename in self.runner.las_filenames:
-            print "Checking %s has been removed.\n" % las_filename
+            print("Checking %s has been removed.\n" % las_filename)
             self.assertTrue(not op.exists(las_filename))
 
         for la4ice_filename in self.runner.la4ice_filenames:
-            print "Checking %s has been removed.\n" % la4ice_filename
+            print("Checking %s has been removed.\n" % la4ice_filename)
             self.assertTrue(not op.exists(la4ice_filename))

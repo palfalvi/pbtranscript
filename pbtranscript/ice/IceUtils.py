@@ -180,7 +180,7 @@ def eval_blasr_alignment(record, qver_get_func, qvmean_get_func,
         query_qver_get_func = lambda _name, _pos: qver_get_func(record.qID, _name, max(0, record.qEnd-1-_pos))
         query_qver_get_func1 = lambda _name, _pos: qver_get_func(record.qID, _name, max(0, record.qEnd-1-_pos-1))
     else:
-        raise Exception, "Unknown strand type {0}".format(record.qStrand)
+        raise Exception("Unknown strand type {0}".format(record.qStrand))
 
     if record.sStrand == '+':
         subject_qver_get_func = lambda _name, _pos: qver_get_func(record.sID, _name, min(_pos+record.sStart, record.sLength-1))
@@ -189,7 +189,7 @@ def eval_blasr_alignment(record, qver_get_func, qvmean_get_func,
         subject_qver_get_func = lambda _name, _pos: qver_get_func(record.sID, _name, max(0, record.sEnd-1-_pos))
         subject_qver_get_func1 = lambda _name, _pos: qver_get_func(record.sID, _name, max(0, record.sEnd-1-_pos-1))
     else:
-        raise Exception, "Unknown strand type {0}".format(record.sStrand)
+        raise Exception("Unknown strand type {0}".format(record.sStrand))
 
     # if mean_qv_for_q|s is not given, always revert back to qv_prob_threshold
     if qvmean_get_func is None:
@@ -549,7 +549,7 @@ def is_blank_bam(bamfile):
     """
     try:
         with Samfile(bamfile, 'rb', check_sq=False) as f:
-            f.next()
+            next(f)
         f.close()
     except StopIteration:
         return True

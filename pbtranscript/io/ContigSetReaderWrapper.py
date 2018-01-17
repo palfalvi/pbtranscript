@@ -103,7 +103,7 @@ class ContigSetReaderWrapper(object):
     def next(self):
         """Return the next FastaRecord or FastqRecord."""
         try:
-            return self.it.next()
+            return next(self.it)
         except StopIteration:
             self.reader_index += 1
             if self.reader_index < len(self.readers):
@@ -114,7 +114,7 @@ class ContigSetReaderWrapper(object):
     def consolidate(self, out_prefix):
         """Consolidate ContigSet to FASTA/FASTQ file, return path to output file."""
         try:
-            r0 = self.next()
+            r0 = next(self)
         except StopIteration:
             raise ValueError("No records to consolidate")
         if isinstance(r0, FastaRecord) or isinstance(r0, IndexedFastaRecord):
@@ -123,7 +123,7 @@ class ContigSetReaderWrapper(object):
                 writer.writeRecord(r0.name, r0.sequence[:])
                 while True:
                     try:
-                        r = self.next()
+                        r = next(self)
                     except StopIteration:
                         break
                     if not (isinstance(r, FastaRecord) or isinstance(r, IndexedFastaRecord)):
@@ -136,7 +136,7 @@ class ContigSetReaderWrapper(object):
                 writer.writeRecord(r0)
                 while True:
                     try:
-                        r = self.next()
+                        r = next(self)
                     except StopIteration:
                         break
                     if not isinstance(r, FastqRecord):

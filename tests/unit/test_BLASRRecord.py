@@ -1,4 +1,5 @@
 """Test classes defined within pbtranscript.io.BLASRRecord."""
+from __future__ import print_function
 import unittest
 import os.path as op
 import hashlib
@@ -71,16 +72,16 @@ class TEST_BLASRRECORD(unittest.TestCase):
 
     def test_M4Reader(self):
         """Test BLASR M4 Reader."""
-        print self.m4
+        print(self.m4)
         reader = BLASRM4Reader(self.m4)
         reads = [x for x in reader]
         self.assertTrue(len(reads), 2)
         r0, r1 = reads
 
-        print "r0"
-        print r0.__dict__
-        print "t0"
-        print self.t0.__dict__
+        print("r0")
+        print(r0.__dict__)
+        print("t0")
+        print(self.t0.__dict__)
 
         self.assertTrue(r0 == self.t0)
         self.assertTrue(r1 == self.t1)
@@ -120,10 +121,10 @@ class TEST_BLASRRECORD(unittest.TestCase):
         self.assertTrue(hashlib.md5(r2.sAln).hexdigest() ==
             "8ce8f6a8055e8c54a76abd1eba893ea2")
         r2.qAln = r2.alnStr = r2.sAln = None
-        print "r2"
-        print r2.__dict__
-        print "t22"
-        print self.t22.__dict__
+        print("r2")
+        print(r2.__dict__)
+        print("t22")
+        print(self.t22.__dict__)
         self.assertTrue(r2 == self.t22)
 
 

@@ -1,6 +1,7 @@
 """
 Class ICEIterative for iterative clustering and error correction.
 """
+from __future__ import print_function
 import cPickle
 import json
 import math
@@ -1273,7 +1274,7 @@ class IceIterative(IceFiles):
                     _membership[x] = cid
                 if (cid not in self.refs or
                         len(self.refs[cid]) == 0):
-                    print "ref for {0} does not exist!".format(cid)
+                    print("ref for {0} does not exist!".format(cid))
                 elif check_dir_lambda(cid):  # or random.random() <= .01:
                     self.add_log("Randomly checking {cid}".format(cid=cid))
                     seqids = set(line.strip()[1:].split()[0] for line in

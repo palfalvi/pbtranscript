@@ -214,7 +214,7 @@ def pbdagcon_wrapper(fasta_filename, output_prefix,
 
     except AlignGraphUtilError:
         # pick the first sequence as reference as a backup plan
-        first_seq = FastaReader(fasta_filename).__iter__().next()
+        first_seq = next(FastaReader(fasta_filename).__iter__())
         with open(ref_filename, 'w') as f:
             f.write(">{0}_ref\n{1}\n".
                     format(consensus_name, first_seq.sequence))

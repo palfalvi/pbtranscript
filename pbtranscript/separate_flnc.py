@@ -338,7 +338,7 @@ class SeparateFLNCBySize(SeparateFLNCBase):
         return a dict {SizeBin: number of parts in this SizeBin}
         """
         # first check min - max size range
-        min_size = sys.maxint + 1
+        min_size = sys.maxsize + 1
         max_size = 0
         base_in_each_size = defaultdict(lambda: 0) # SizeBin --> number of bases
         for r in ContigSetReaderWrapper(self.flnc_filename):
