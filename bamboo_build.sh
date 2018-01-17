@@ -49,7 +49,7 @@ PIP="pip --cache-dir=$PWD/.pip --disable-pip-version-check"
 echo "## Install pip modules"
 ConsensusCore_VERSION=`curl -sL http://bitbucket:7990/projects/SAT/repos/consensuscore/raw/setup.py?at=refs%2Fheads%2Fdevelop|grep 'version='|sed -e 's/^.*="//;s/",//'`
 ConsensusCore2_VERSION=`curl -sL http://bitbucket:7990/projects/SAT/repos/unanimity/raw/CMakeLists.txt?at=refs%2Fheads%2Fdevelop|grep 'project.*UNANIMITY.*VERSION'|sed -e 's/project(UNANIMITY VERSION //;s/ LANGUAGES CXX C)//'`
-GenomicConsensus_VERSION=`curl -sL http://bitbucket.nanofluidics.com:7990/projects/SAT/repos/genomicconsensus/raw/GenomicConsensus/__init__.py?at=refs%2Fheads%2Fdevelop|grep __VERSION__|sed -e 's/.*__VERSION__ = "//;s/".*$//'`
+GenomicConsensus_VERSION=`curl -sL http://bitbucket.nanofluidics.com:7990/projects/SAT/repos/genomicconsensus/raw/setup.py?at=refs%2Fheads%2Fdevelop|grep 'version='|sed -e "s/.*version='\(.*\)',/\1/"`
 $PIP install --user \
   $NX3PBASEURL/pythonpkgs/pysam-0.13-cp27-cp27mu-linux_x86_64.whl \
   $NX3PBASEURL/pythonpkgs/xmlbuilder-1.0-cp27-none-any.whl \
