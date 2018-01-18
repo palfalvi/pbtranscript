@@ -3,6 +3,7 @@
 Test tool contract interfaces.  This also doubles as a test for dataset support
 for both .bam and .fasta inputs.
 """
+from __future__ import print_function
 
 import unittest
 import logging
@@ -223,7 +224,7 @@ class TestSeparateFLNC(pbcommand.testkit.PbTestApp):
         pkl = rtc.task.output_files[0]
         with open(pkl, 'rb') as f:
             result = cPickle.load(f)
-            print 'separate_flnc.pickle is %s' % f
+            print('separate_flnc.pickle is %s' % f)
             assert len(result.keys()) == 2
             assert 'sorted_keys' in result.keys()
             assert 'key_to_file' in result.keys()

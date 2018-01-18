@@ -23,7 +23,7 @@ def get_len_from_read_name(seqid):
         else:
             s, e = seqid.split('/')[2].split('_')
         return abs(int(s)-int(e))
-    except IndexError, ValueError:
+    except (IndexError, ValueError):
         raise ValueError("Could not get read length from read name %s" % seqid)
 
 

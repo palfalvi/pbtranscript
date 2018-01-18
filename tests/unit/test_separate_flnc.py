@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import unittest
 import os.path as op
 import filecmp
@@ -21,9 +22,9 @@ def test_SizeBin():
     b2 = SizeBin(2,3)
     b3 = SizeBin(3,4)
 
-    print "b1=%s" % str(b1)
-    print "b2=%s" % str(b2)
-    print "%s" % (b1 < b2)
+    print("b1=%s" % str(b1))
+    print("b2=%s" % str(b2))
+    print("%s" % (b1 < b2))
     #assert (b1 < b2)
 
     assert str(b1) == "1to2kb"
@@ -65,7 +66,7 @@ class TestSeparateFLNCByPrimer(unittest.TestCase):
                 self.assertTrue(all([obj._get_primer_id(r) == key for r in reader]))
 
         for xml_fn in obj.out_contigset_files:
-            print xml_fn
+            print(xml_fn)
             self.assertEqual(op.exists(xml_fn), has_contigset_output)
 
     def test_run_xml_in(self):
@@ -85,7 +86,7 @@ class TestSeparateFLNCByPrimer(unittest.TestCase):
                 self.assertTrue(all([obj._get_primer_id(r) == key for r in reader]))
 
         for xml_fn in obj.out_contigset_files:
-            print xml_fn
+            print(xml_fn)
             self.assertEqual(op.exists(xml_fn), has_contigset_output)
 
 
@@ -114,22 +115,22 @@ class TestSeparateFLNCBySize(unittest.TestCase):
     def test_bin_manual(self):
         """Test run()."""
         bin_manual = []
-        print 'testing %s' % bin_manual
+        print('testing %s' % bin_manual)
         expected_bin_manual = [(SizeBin(3, 4), 0), (SizeBin(4,5), 0)] # [(SizeBin, part_idx), ... ]
         self._test_bin_manual(bin_manual=bin_manual, expected_bin_manual=expected_bin_manual)
 
         bin_manual = [3, 10]
-        print 'testing %s' % bin_manual
+        print('testing %s' % bin_manual)
         expected_bin_manual = [(SizeBin(3, 10), 0)]
         self._test_bin_manual(bin_manual=bin_manual, expected_bin_manual=expected_bin_manual)
 
         bin_manual = [0, 1]
-        print 'testing %s' % bin_manual
+        print('testing %s' % bin_manual)
         expected_bin_manual = [(SizeBin(1, 5), 0)]
         self._test_bin_manual(bin_manual=bin_manual, expected_bin_manual=expected_bin_manual)
 
         bin_manual = [2, 3, 4, 8]
-        print 'testing %s' % bin_manual
+        print('testing %s' % bin_manual)
         expected_bin_manual = [(SizeBin(3, 4), 0), (SizeBin(4, 8), 0)]
         self._test_bin_manual(bin_manual=bin_manual, expected_bin_manual=expected_bin_manual)
 

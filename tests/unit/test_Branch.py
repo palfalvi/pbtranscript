@@ -1,4 +1,5 @@
 """Test pbtranscript.collapsing.Branch."""
+from __future__ import print_function
 import unittest
 import os.path as op
 import cPickle
@@ -177,7 +178,7 @@ class TEST_Branch(unittest.TestCase):
 
         def str_to_gffrecord(line):
             fields = line.strip().split('\t')
-            print fields
+            print(fields)
             attributes = []
             for attr_tuple in fields[8].split(';'):
                 if len(attr_tuple.strip()) == 0:
@@ -233,7 +234,7 @@ class TEST_Branch(unittest.TestCase):
         std_bad_gff_fn = op.join(SIV_STD_DIR, "test_branch", test_name + ".bad.gff.unfuzzy")
         std_group_fn = op.join(SIV_STD_DIR, "test_branch", test_name + ".group.txt.unfuzzy")
 
-        print "Comparing %s and %s"  %  (good_gff_fn, std_good_gff_fn)
+        print("Comparing %s and %s"  %  (good_gff_fn, std_good_gff_fn))
         self.assertTrue(filecmp.cmp(good_gff_fn, std_good_gff_fn))
         self.assertTrue(filecmp.cmp(bad_gff_fn, std_bad_gff_fn))
         self.assertTrue(filecmp.cmp(group_fn, std_group_fn))

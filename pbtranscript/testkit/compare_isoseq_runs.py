@@ -3,6 +3,7 @@
 Compare the results of a pbtranscript run (or pbsmrtpipe IsoSeq job) to an
 existing benchmark.
 """
+from __future__ import print_function
 
 from cPickle import *
 import argparse
@@ -152,8 +153,8 @@ class Compare_Isoseq_Runs(object):
 
         S, k1, k2, m, n = calc_sim_matrix(lhs_clusters, rhs_clusters)
         OK = (S.sum()/max(m,n) >= min_cluster_matrix_similarity)
-        print "Q: Initial clusters in init_pickle similarity >= %f?" % min_cluster_matrix_similarity
-        print "A: %s (%f)" % (OK, S.sum()/max(m,n))
+        print("Q: Initial clusters in init_pickle similarity >= %f?" % min_cluster_matrix_similarity)
+        print("A: %s (%f)" % (OK, S.sum()/max(m,n)))
         self._submit(OK)
         return OK
 
@@ -165,22 +166,22 @@ class Compare_Isoseq_Runs(object):
         lhs_clusters = filter_clusters_by_size(lhs_pickle, 2)
         rhs_clusters = filter_clusters_by_size(rhs_pickle, 2)
 
-        print "PRINT_DIFF_INIT_PICKLE STARTED"
+        print("PRINT_DIFF_INIT_PICKLE STARTED")
         for lhs_cluster in lhs_clusters:
             if (len(lhs_clusters[lhs_cluster]) > 1):
-                print "lhs cluster [%s]" % lhs_cluster
+                print("lhs cluster [%s]" % lhs_cluster)
                 for read in lhs_clusters[lhs_cluster]:
-                    print "--> Looking at %s" % (read)
+                    print("--> Looking at %s" % (read))
                     for rhs_cluster in rhs_clusters:
                         if read in rhs_clusters[rhs_cluster]:
-                            print "-----> read in rhs cluster [%s]" % rhs_cluster
-        print "PRINT_DIFF_INIT_PICKLE ENDED"
+                            print("-----> read in rhs cluster [%s]" % rhs_cluster)
+        print("PRINT_DIFF_INIT_PICKLE ENDED")
 
     def final_consensus_fn(self, which_dir=None):
         """path to output/final.consensus.fasta."""
         try:
             return self._get_fn(which_dir, "output/final.consensus.fasta")
-        except IOError, RuntimeError:
+        except IOError as RuntimeError:
             return self._get_fn(which_dir, "output/final.consensus.fa")
 
     def compare_ref_consensus(self):
@@ -190,15 +191,15 @@ class Compare_Isoseq_Runs(object):
 
         len1 = len([r for r in FastaReader(lhs_ref_consensus)])
         len2 = len([r for r in FastaReader(rhs_ref_consensus)])
-        print "Q: Number of sequences in ref_consensus equalivalent?"
-        print "A: %s (%d vs %d)" % (len1==len2, len1, len2)
+        print("Q: Number of sequences in ref_consensus equalivalent?")
+        print("A: %s (%d vs %d)" % (len1==len2, len1, len2))
 
         lhs_ref_seqs = [r.sequence for r in FastaReader(lhs_ref_consensus)]
         rhs_ref_seqs = [r.sequence for r in FastaReader(rhs_ref_consensus)]
 
         OK = (lhs_ref_seqs == rhs_ref_seqs)
-        print "Q: Unpolished cluster sequences in output/final.consensus.fasta identical?"
-        print "A: %s (%d vs %d)" % (OK, len(lhs_ref_seqs), len(rhs_ref_seqs))
+        print("Q: Unpolished cluster sequences in output/final.consensus.fasta identical?")
+        print("A: %s (%d vs %d)" % (OK, len(lhs_ref_seqs), len(rhs_ref_seqs)))
         self._submit(OK)
         return OK
 
@@ -216,8 +217,8 @@ class Compare_Isoseq_Runs(object):
         rhs_filtered_seqs = filter_cluster_seqs_by_full_length_coverage(rhs_hq_fn, min_flnc_coverage)
 
         OK = (len(lhs_filtered_seqs) == len(rhs_filtered_seqs))
-        print "Q: Number of hq clusters with at least %d full length coverage identical?" % min_flnc_coverage
-        print "A: %s (%d vs %d)" % (OK, len(lhs_filtered_seqs), len(rhs_filtered_seqs))
+        print("Q: Number of hq clusters with at least %d full length coverage identical?" % min_flnc_coverage)
+        print("A: %s (%d vs %d)" % (OK, len(lhs_filtered_seqs), len(rhs_filtered_seqs)))
         self._submit(OK)
         return OK
 
@@ -237,11 +238,11 @@ class Compare_Isoseq_Runs(object):
             seq_similarity = get_seq_similarity(lhs_seq, rhs_seq)
             if (seq_similarity < min_seq_similarity):
                 OK = False
-                print "sequence similarity between lhs (%s) and rhs (%s): %f" % \
+                print("sequence similarity between lhs (%s) and rhs (%s): %f" % \
                         (rhs_filtered_seqs[i].name, lhs_filtered_seqs[i].name,
-                         seq_similarity)
-        print "Q: Sequence similarity all greater than %f?" % min_seq_similarity
-        print "A: %s" % OK
+                         seq_similarity))
+        print("Q: Sequence similarity all greater than %f?" % min_seq_similarity)
+        print("A: %s" % OK)
         self._submit(OK)
         return OK
 

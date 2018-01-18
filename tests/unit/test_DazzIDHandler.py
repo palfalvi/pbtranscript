@@ -1,3 +1,4 @@
+from __future__ import print_function
 import unittest
 import os.path as op
 import filecmp
@@ -36,7 +37,7 @@ class Test_DazzIDHandler(unittest.TestCase):
         expected_pickle_filename = prefix + ".dazz.fasta.pickle"
         expected_db_filename = prefix + ".dazz.fasta.db"
 
-        print "Testing DazzIDHandler(%s, converted=False)" % (fn)
+        print("Testing DazzIDHandler(%s, converted=False)" % (fn))
         handler = DazzIDHandler(fn, converted=False)
 
         # check file names
@@ -55,17 +56,17 @@ class Test_DazzIDHandler(unittest.TestCase):
         self.assertTrue(filecmp.cmp(handler.pickle_filename, self.stdout_pickle))
 
         # check make_db
-        print "Test DazzIDHandler.make_db"
+        print("Test DazzIDHandler.make_db")
         handler.make_db()
         self.assertTrue(op.exists(handler.db_filename))
 
         """Test self.read_dazz_pickle."""
         fn = op.join(self.stdoutDir, self.fastaFileName)
-        print "Testing DazzIDHandler(%s, converted=True)" % fn
+        print("Testing DazzIDHandler(%s, converted=True)" % fn)
         handler = DazzIDHandler(fn, converted=True)
         handler.read_dazz_pickle()
 
-        print "Loading from pickle %s" % (self.stdout_pickle)
+        print("Loading from pickle %s" % (self.stdout_pickle))
         expected_dazz_mapping = load(open(self.stdout_pickle, 'r'))
         expected_keys = range(1, 13)
 
@@ -73,7 +74,7 @@ class Test_DazzIDHandler(unittest.TestCase):
         for k in expected_keys:
             self.assertTrue(expected_dazz_mapping[k], handler.dazz_mapping[k])
 
-        print "Testing DazzIDHandler.num_blocks"
+        print("Testing DazzIDHandler.num_blocks")
         self.assertTrue(handler.num_blocks, 1)
 
 
@@ -107,7 +108,7 @@ class Test_DazzIDHandler_DataSet(unittest.TestCase):
         expected_pickle_filename = prefix + ".dazz.fasta.pickle"
         expected_db_filename = prefix + ".dazz.fasta.db"
 
-        print "Testing DazzIDHandler(xml, converted=False, dazz_dir)"
+        print("Testing DazzIDHandler(xml, converted=False, dazz_dir)")
         handler = DazzIDHandler(op.join(self.inputDir, self.filename),
                                 converted=False, dazz_dir=self.outDir)
 
@@ -127,17 +128,17 @@ class Test_DazzIDHandler_DataSet(unittest.TestCase):
         self.assertTrue(filecmp.cmp(handler.pickle_filename, self.stdout_pickle))
 
         # check make_db
-        print "Test DazzIDHandler.make_db"
+        print("Test DazzIDHandler.make_db")
         handler.make_db()
         self.assertTrue(op.exists(handler.db_filename))
 
         """Test self.read_dazz_pickle."""
         fn = op.join(self.stdoutDir, self.filename)
-        print "Testing DazzIDHandler(%s, converted=True)" % fn
+        print("Testing DazzIDHandler(%s, converted=True)" % fn)
         handler = DazzIDHandler(fn, converted=True)
         handler.read_dazz_pickle()
 
-        print "Loading from pickle %s" % (self.stdout_pickle)
+        print("Loading from pickle %s" % (self.stdout_pickle))
         expected_dazz_mapping = load(open(self.stdout_pickle, 'r'))
         expected_keys = range(1, 16)
 
@@ -145,5 +146,5 @@ class Test_DazzIDHandler_DataSet(unittest.TestCase):
         for k in expected_keys:
             self.assertTrue(expected_dazz_mapping[k], handler.dazz_mapping[k])
 
-        print "Testing DazzIDHandler.num_blocks"
+        print("Testing DazzIDHandler.num_blocks")
         self.assertTrue(handler.num_blocks, 1)

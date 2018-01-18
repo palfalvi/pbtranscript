@@ -6,6 +6,7 @@ reference transcripts.
 Usage:
     compare_reference_transcripts.py isoseq_output.fasta reference_transcripts.fasta output
 """
+from __future__ import print_function
 
 import argparse
 import sys
@@ -74,16 +75,16 @@ class CompareReferenceTranscripts(object):
         _alns = []
         for r in alns:
             if r.identity / 100.0 < self.min_seq_similarity:
-                print "Ignored mapping (%s, %s) because identity %s < %s" % \
-                        (r.qID, r.sID, r.identity / 100.0, self.min_seq_similarity)
+                print("Ignored mapping (%s, %s) because identity %s < %s" % \
+                        (r.qID, r.sID, r.identity / 100.0, self.min_seq_similarity))
                 continue
             if not is_fuzzy(r, self.max_fuzzy_junction):
-                print "Ignored mapping (%s, %s) because edit distance > %s" % \
-                        (r.qID, r.sID, self.max_fuzzy_junction)
+                print("Ignored mapping (%s, %s) because edit distance > %s" % \
+                        (r.qID, r.sID, self.max_fuzzy_junction))
                 continue
 
             _alns.append(r)
-        print "Ignored %s mappings in total" % (len(alns) - len(_alns)),
+        print("Ignored %s mappings in total" % (len(alns) - len(_alns)), end=' ')
         return _alns
 
     @property
@@ -173,7 +174,7 @@ def get_parser():
                         help="Output analysis file")
     parser.add_argument("--min_true_positive", action="store", type=int, default=0,
                         help="Minimum number of true positives to consider Iso-Seq run successful")
-    parser.add_argument("--max_false_positive", action="store", type=int, default=sys.maxint,
+    parser.add_argument("--max_false_positive", action="store", type=int, default=sys.maxsize,
                         help="Maximum number of false positives (collapsed filtered isoforms " +
                         "which are not in reference set) to consider Iso-Seq run successful")
     parser.add_argument("--min_seq_similarity", action="store", dest="min_seq_similarity",

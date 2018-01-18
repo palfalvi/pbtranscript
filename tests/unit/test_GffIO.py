@@ -63,7 +63,7 @@ class TestCollapseGffRecord(unittest.TestCase):
             r = None
             while True:
                 try:
-                    records.append(reader.next())
+                    records.append(next(reader))
                 except StopIteration:
                     break
             self.assertEqual(len(records), expected_num_records)

@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 import unittest
 import os.path as op
@@ -7,7 +8,7 @@ from pbtranscript.io.PbiBamIO import CCSInput
 import test_setpath
 
 DATA = test_setpath.DATA_DIR
-print "DATA", DATA
+print("DATA", DATA)
 DATA2 = "/pbi/dept/secondary/siv/testdata/pbtranscript-unittest/data/test_ccs_input/"
 
 

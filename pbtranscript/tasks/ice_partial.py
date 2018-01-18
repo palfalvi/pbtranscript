@@ -3,6 +3,7 @@
 """
 Calls 'ice_partial.py one'.
 """
+from __future__ import print_function
 
 import logging
 import sys
@@ -56,8 +57,8 @@ def resolved_tool_contract_runner(rtc):
                 break
     tmp_dir = rtc.task.tmpdir_resources[0].path \
             if len(rtc.task.tmpdir_resources) > 0 else None
-    print 'my tmp_dir is '
-    print tmp_dir
+    print('my tmp_dir is ')
+    print(tmp_dir)
     return IcePartialOne(
         input_fasta=rtc.task.input_files[0],
         ref_fasta=rtc.task.input_files[1],

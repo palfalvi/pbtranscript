@@ -1,4 +1,5 @@
 """Test pClique, CliqueSubList."""
+from __future__ import print_function
 import unittest
 import pbtranscript.ice.pClique as pClique
 from networkx import Graph
@@ -30,7 +31,7 @@ class Test_pClique(unittest.TestCase):
         i = nodes.index('a')
         tQ = pClique.grasp(S, H, 1, 5, i)
         c = [nodes[i] for i in tQ]
-        print c
+        print(c)
         self.assertTrue(set(c) == set(['a', 'b', 'c', 'd', 'e']))
 
 

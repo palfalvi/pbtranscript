@@ -26,7 +26,7 @@ class TEST_ContigSetReaderWrapper(unittest.TestCase):
             self.assertTrue(reads[24].sequence[:].startswith("ACAAGTTTGACTTTGAAATCAGAG"))
 
         with ContigSetReaderWrapper(self.xmlfn) as reader:
-            read = reader.next()
+            read = next(reader)
             self.assertEqual(read.name, "m131018_081703_42161_c100585152550000001823088404281404_s1_p0/43/ccs")
             self.assertTrue(read.sequence[:].startswith("GTCCCAAATCCTGGGGAGTTCC"))
 
@@ -47,7 +47,7 @@ class TEST_ContigSetReaderWrapper(unittest.TestCase):
             self.assertTrue(reads[21].sequence[:].startswith("CTTACCAATGTGGGTCAGAT"))
 
         with ContigSetReaderWrapper(self.fastafn) as reader:
-            read = reader.next()
+            read = next(reader)
             self.assertEqual(read.name, "m131018_081703_42161_c100585152550000001823088404281404_s1_p0/43/ccs")
             self.assertTrue(read.sequence[:].startswith("GTCCCAAATCCTGGGGAGTTCC"))
 
@@ -65,7 +65,7 @@ class TEST_ContigSetReaderWrapper(unittest.TestCase):
             self.assertTrue(reads[0].sequence[:].startswith("ATTCTGAGGAGGGTCA"))
 
         with ContigSetReaderWrapper(self.fastqfn) as reader:
-            read = reader.next()
+            read = next(reader)
             self.assertEqual(read.name, "m131018_081703_42161_c100585152550000001823088404281404_s1_p0/61232/4045_63_CCS")
             self.assertTrue(read.sequence[:].startswith("ATTCTGAGGAGGGTCA"))
 

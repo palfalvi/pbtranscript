@@ -1,4 +1,5 @@
 """Test classes defined within pbtranscript.CombineUtils."""
+from __future__ import print_function
 
 import unittest
 import os.path as op
@@ -24,7 +25,7 @@ class TEST_CombineUtils(unittest.TestCase):
         d = op.join(SIV_DATA_DIR, "test_tool_contract_chunks")
         split_dirs = [op.join(d, b, "cluster_out") for b in
                       ("0to1kb_part0", "1to2kb_part0", "2to3kb_part0", "3to4kb_part0", "4to5kb_part0")]
-        print split_dirs
+        print(split_dirs)
         out_combined_dir = op.join(OUT_DIR, "test_CombineUtils", "combined_dir")
         rmpath(out_combined_dir)
         mkdir(out_combined_dir)
