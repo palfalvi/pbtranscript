@@ -1,6 +1,7 @@
 """
 Test tool contract with cluster chunking interfaces.
 """
+from __future__ import print_function
 import shutil
 import unittest
 import logging
@@ -80,7 +81,7 @@ def make_pickle(in_pickle, out_pickle, root_dir,
         new_flnc = op.join(root_dir, bin_name, flnc_name)
         new_flnc_fa = new_flnc.replace(".contigset.xml", ".fasta")
 
-        print "new_flnc = %s" % new_flnc
+        print("new_flnc = %s" % new_flnc)
         shutil.copy(in_flnc_fa, new_flnc_fa)
         as_contigset(new_flnc_fa, new_flnc)
 
@@ -107,8 +108,8 @@ def make_pickle(in_pickle, out_pickle, root_dir,
             copied_files[new_task.nfl_pickle] = True
 
 
-    print "making pickle from in_pickle %s to out_pickle %s, root_dir %s" % \
-            (in_pickle, out_pickle, root_dir)
+    print("making pickle from in_pickle %s to out_pickle %s, root_dir %s" % \
+            (in_pickle, out_pickle, root_dir))
 
     p = ChunkTasksPickle.read(in_pickle)
     assert len(p) > 0
@@ -117,7 +118,7 @@ def make_pickle(in_pickle, out_pickle, root_dir,
         copied_files = dict()
         for task in p:
             cluster_out_dir = make_cluster_out_dir(task.cluster_out_dir, root_dir)
-            print "new_cluster_out_dir is %s" % cluster_out_dir
+            print("new_cluster_out_dir is %s" % cluster_out_dir)
             #flnc_file = make_flnc(task.flnc_file)
             new_task = ClusterChunkTask(task.cluster_bin_index,
                                         task.flnc_file,
@@ -132,7 +133,7 @@ def make_pickle(in_pickle, out_pickle, root_dir,
         copied_files = dict()
         for task in p:
             cluster_out_dir = make_cluster_out_dir(task.cluster_out_dir, root_dir)
-            print "new_cluster_out_dir is %s" % cluster_out_dir
+            print("new_cluster_out_dir is %s" % cluster_out_dir)
             #flnc_file = make_flnc(task.flnc_file)
             new_task = PartialChunkTask(task.cluster_bin_index,
                                         task.flnc_file,
@@ -150,7 +151,7 @@ def make_pickle(in_pickle, out_pickle, root_dir,
         copied_files = dict()
         for task in p:
             cluster_out_dir = make_cluster_out_dir(task.cluster_out_dir, root_dir)
-            print "new_cluster_out_dir is %s" % cluster_out_dir
+            print("new_cluster_out_dir is %s" % cluster_out_dir)
             #flnc_file = make_flnc(task.flnc_file)
             new_task = PolishChunkTask(task.cluster_bin_index,
                                        task.flnc_file,
@@ -190,9 +191,9 @@ class TestCreateChunks(pbcommand.testkit.PbTestApp):
                    nfl_ds]  # input 1, nfl.xml
 
     def run_after(self, rtc, output_dir):
-        print rtc.task.output_files[0]
-        print rtc.task.output_files[1]
-        print rtc.task.output_files[2]
+        print(rtc.task.output_files[0])
+        print(rtc.task.output_files[1])
+        print(rtc.task.output_files[2])
 
 @unittest.skipUnless(op.isdir(MNT_DATA), "Missing %s" % MNT_DATA)
 class TestClusterBins(pbcommand.testkit.PbTestApp):
@@ -215,7 +216,7 @@ class TestClusterBins(pbcommand.testkit.PbTestApp):
                             for bin_name in BIN_NAMES]
         self.assertTrue(op.exists(rtc.task.output_files[0]))
         out_consensus_isoforms = [op.join(d, "output", "final.consensus.fasta") for d in cluster_out_dirs]
-        print out_consensus_isoforms
+        print(out_consensus_isoforms)
         self.assertTrue(all([op.exists(f) for f in out_consensus_isoforms]))
 
 
@@ -243,7 +244,7 @@ class TestIcePartialClusterBins(pbcommand.testkit.PbTestApp):
                             for bin_name in BIN_NAMES]
         out_pickles = [IceFiles(prog_name="", root_dir=d).nfl_pickle_i(i=i)
                        for d in cluster_out_dirs for i in range(N_NFL_CHUNKS)]
-        print "output scattered nfl pickles are %s" % out_pickles
+        print("output scattered nfl pickles are %s" % out_pickles)
         self.assertTrue(all([op.exists(f) for f in out_pickles]))
 
 
@@ -272,7 +273,7 @@ class TestGatherIcePartialPickle(pbcommand.testkit.PbTestApp):
                             for bin_name in BIN_NAMES]
         out_pickles = [IceFiles(prog_name="", root_dir=d).nfl_all_pickle_fn
                        for d in cluster_out_dirs]
-        print "output nfl pickles are %s" % out_pickles
+        print("output nfl pickles are %s" % out_pickles)
         self.assertTrue(all([op.exists(f) for f in out_pickles]))
 
 
@@ -325,21 +326,21 @@ class TestGatherPolishedIsoforms(pbcommand.testkit.PbTestApp):
                             for bin_name in BIN_NAMES]
         out_hq_fns = [op.join(d, fn)
                       for d in cluster_out_dirs for fn in HQ_ISOFORMS_FNS]
-        print "out_hq_fns %s" % out_hq_fns
+        print("out_hq_fns %s" % out_hq_fns)
         self.assertTrue(all([op.exists(f) for f in out_hq_fns]))
 
         out_lq_fns = [op.join(d, fn)
                        for d in cluster_out_dirs for fn in LQ_ISOFORMS_FNS]
-        print "out_lq_fns %s" % out_lq_fns
+        print("out_lq_fns %s" % out_lq_fns)
         self.assertTrue(all([op.exists(f) for f in out_lq_fns]))
 
-        print "out_lq_fa %s is not empty" % out_lq_fns[0]
+        print("out_lq_fa %s is not empty" % out_lq_fns[0])
         n = len([r for r in FastaReader(out_lq_fns[0])])
         self.assertTrue(n > 0)
 
         out_logs = [IceFiles(prog_name="", root_dir=d).submitted_quiver_jobs_log
                     for d in cluster_out_dirs]
-        print "out_logs %s" % out_logs
+        print("out_logs %s" % out_logs)
         self.assertTrue(all([op.exists(f) for f in out_logs]))
 
 
@@ -378,11 +379,11 @@ class TestCombineClusterBins(pbcommand.testkit.PbTestApp):
                             for bin_name in BIN_NAMES]
 
         combined_lq_cs = rtc.task.output_files[5]
-        print "combined_lq_fa %s must not be empty" % combined_lq_cs
+        print("combined_lq_fa %s must not be empty" % combined_lq_cs)
         n = len([r for r in ContigSet(combined_lq_cs)])
         self.assertTrue(n > 0)
 
         out_logs = [IceFiles(prog_name="", root_dir=d).submitted_quiver_jobs_log
                     for d in cluster_out_dirs]
-        print "out_logs %s" % out_logs
+        print("out_logs %s" % out_logs)
         self.assertTrue(all([op.exists(f) for f in out_logs]))

@@ -1,4 +1,5 @@
 """Test classes defined within pbtranscript.counting.CountUtils."""
+from __future__ import print_function
 import unittest
 import os.path as op
 from pbcore.util.Process import backticks
@@ -138,7 +139,7 @@ class TEST_CountUtils(unittest.TestCase):
                             given_total=None,
                             restricted_movies=None,
                             write_header_comments=True)
-        print output_filename
+        print(output_filename)
         self.assertTrue(op.exists(output_filename))
         expected_first = "PB.1.1\t30\t30\t30.83\t6.3667e-03\t3.0367e-03\t3.0637e-03"
         expected_last = "PB.12.5\t16\t22\t23.20\t3.3956e-03\t2.2269e-03\t2.3052e-03"

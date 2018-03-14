@@ -59,7 +59,7 @@ def get_contract_parser():
                           "Pickle In",
                           "Separate flnc pickle file") # input 0
 
-    p.add_input_file_type(FileTypes.PICKLE, "nfl_contigset",
+    p.add_input_file_type(FileTypes.DS_CONTIG, "nfl_contigset",
                           "ContigSet In",
                           "Nfl Contigset") # input 1
 

@@ -17,7 +17,7 @@ curl -sL $NX3PBASEURL/zlib-1.2.8.tgz            | tar zvxf - -C build
 curl -sL $NX3PBASEURL/libbzip2-1.0.6.tgz        | tar zvxf - -C build
 curl -sL $NX3PBASEURL/gmap-2016-11-07.tgz       | tar zvxf - -C build
 curl -sL $NX3PBASEURL/ncurses-6.0.tgz           | tar zvxf - -C build
-curl -sL $NX3PBASEURL/samtools-1.3.1.tgz        | tar zvxf - -C build
+curl -sL $NX3PBASEURL/samtools-1.6.tgz        | tar zvxf - -C build
 curl -sL http://nexus/repository/unsupported/gcc-6.4.0/DAZZ_DB-SNAPSHOT.tgz                | tar zvxf - -C build
 curl -sL http://nexus/repository/unsupported/gcc-6.4.0/DALIGNER-SNAPSHOT.tgz               | tar zvxf - -C build
 
@@ -29,10 +29,10 @@ tar zxf $PBDAGCON     -C build
 
 # preload software
 type module >& /dev/null || . /mnt/software/Modules/current/init/bash
-module load git/2.8.3
-module load gcc/6.4.0
-module load ccache/3.2.3
-module load htslib/1.3.1
+module load git
+module load gcc
+module load ccache
+module load htslib
 CXX="$CXX -static-libstdc++"
 GXX="$CXX"
 export CXX GXX
@@ -49,9 +49,9 @@ PIP="pip --cache-dir=$PWD/.pip --disable-pip-version-check"
 echo "## Install pip modules"
 ConsensusCore_VERSION=`curl -sL http://bitbucket:7990/projects/SAT/repos/consensuscore/raw/setup.py?at=refs%2Fheads%2Fdevelop|grep 'version='|sed -e 's/^.*="//;s/",//'`
 ConsensusCore2_VERSION=`curl -sL http://bitbucket:7990/projects/SAT/repos/unanimity/raw/CMakeLists.txt?at=refs%2Fheads%2Fdevelop|grep 'project.*UNANIMITY.*VERSION'|sed -e 's/project(UNANIMITY VERSION //;s/ LANGUAGES CXX C)//'`
-GenomicConsensus_VERSION=`curl -sL http://bitbucket.nanofluidics.com:7990/projects/SAT/repos/genomicconsensus/raw/GenomicConsensus/__init__.py?at=refs%2Fheads%2Fdevelop|grep __VERSION__|sed -e 's/.*__VERSION__ = "//;s/".*$//'`
+GenomicConsensus_VERSION=`curl -sL http://bitbucket.nanofluidics.com:7990/projects/SAT/repos/genomicconsensus/raw/setup.py?at=refs%2Fheads%2Fdevelop|grep 'version='|sed -e "s/.*version='\(.*\)',/\1/"`
 $PIP install --user \
-  $NX3PBASEURL/pythonpkgs/pysam-0.9.1.4-cp27-cp27mu-linux_x86_64.whl \
+  $NX3PBASEURL/pythonpkgs/pysam-0.13-cp27-cp27mu-linux_x86_64.whl \
   $NX3PBASEURL/pythonpkgs/xmlbuilder-1.0-cp27-none-any.whl \
   $NX3PBASEURL/pythonpkgs/avro-1.7.7-cp27-none-any.whl \
   $NX3PBASEURL/pythonpkgs/iso8601-0.1.12-py2.py3-none-any.whl \

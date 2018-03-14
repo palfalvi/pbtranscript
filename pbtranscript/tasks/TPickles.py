@@ -6,6 +6,7 @@ and ice_polish.
 Class ChunkTasksPickle reads and writes ChunkTask objects from/to
 input/output pickle files.
 """
+from __future__ import print_function
 import cPickle
 import os.path as op
 from pbcore.io import ContigSet
@@ -204,7 +205,7 @@ class ChunkTasksPickle(object):
         the same.
         """
         for t in self.chunk_tasks:
-            print t
+            print(t)
         # sort tasks by weight (n of flnc reads in task) reversely
         self.sorted_by_attr(attr='n_flnc_reads', reverse=True)
 

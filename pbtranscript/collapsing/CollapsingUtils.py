@@ -347,7 +347,7 @@ def compare_exon_matrix(m1, m2, node_d, strand, merge5=True):
                 return False, None
         return True, m1
 
-    raise Exception, "Should not happen"
+    raise Exception("Should not happen")
 
 
 def iterative_merge_transcripts(result_list, node_d, merge5=True):

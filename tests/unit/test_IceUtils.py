@@ -1,3 +1,4 @@
+from __future__ import print_function
 import unittest
 import os.path as op
 import filecmp
@@ -39,9 +40,9 @@ def _trim_subreads_and_write(in_bam, zmws, out_bam, trim_len, min_len):
 
     assert(out_m == set([zmw.split('/')[0] for zmw in zmws]))
 
-    print "Making pbindex for %s" % out_bam
+    print("Making pbindex for %s" % out_bam)
     make_pbi(out_bam)
-    print "pbindex ended"
+    print("pbindex ended")
 
     out_bam_reader = BamCollection(out_bam)
 

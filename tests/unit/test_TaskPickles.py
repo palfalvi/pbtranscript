@@ -1,4 +1,5 @@
 """Test pbtranscript.Classifier."""
+from __future__ import print_function
 
 import unittest
 import filecmp
@@ -71,38 +72,38 @@ class Test_ChunkTasksPickle(unittest.TestCase):
         """Test sort_and_group_tasks"""
         d = op.join(SIV_DATA_DIR, "test_tool_contract_chunks")
         p_fn = op.join(d, "cluster_chunks.pickle")
-        print p_fn
+        print(p_fn)
         p = ChunkTasksPickle.read(p_fn)
         groups = p.sort_and_group_tasks(max_nchunks=10)
-        print 'groups=%s' % groups
+        print('groups=%s' % groups)
         expected_groups = [[0], [1], [2], [3], [4]]
         self.assertEqual(groups, expected_groups)
 
         groups = p.sort_and_group_tasks(max_nchunks=1)
-        print 'groups=%s' % groups
+        print('groups=%s' % groups)
         expected_groups = [[0,1,2,3,4]]
         self.assertEqual(groups, expected_groups)
 
         p_fn = op.join(d, "partial_chunks.pickle")
-        print p_fn
+        print(p_fn)
         p = ChunkTasksPickle.read(p_fn)
         groups = p.sort_and_group_tasks(max_nchunks=8)
-        print 'groups=%s' % groups
+        print('groups=%s' % groups)
         expected_groups = [[0,8], [1,9], [2], [3], [4], [5], [6], [7]]
         self.assertEqual(groups, expected_groups)
         groups = p.sort_and_group_tasks(max_nchunks=1)
-        print 'groups=%s' % groups
+        print('groups=%s' % groups)
         expected_groups = [[0,1,2,3,4,5,6,7,8,9]]
         self.assertEqual(groups, expected_groups)
 
         p_fn = op.join(d, "polish_chunks.pickle")
-        print p_fn
+        print(p_fn)
         p = ChunkTasksPickle.read(p_fn)
         groups = p.sort_and_group_tasks(max_nchunks=10)
-        print 'groups=%s' % groups
+        print('groups=%s' % groups)
         expected_groups = [[0, 10], [1,11], [2,12], [3], [4], [5], [6], [7], [8], [9]]
         self.assertEqual(groups, expected_groups)
         groups = p.sort_and_group_tasks(max_nchunks=1)
-        print 'groups=%s' % groups
+        print('groups=%s' % groups)
         expected_groups = [[0,1,2,3,4,5,6,7,8,9,10,11,12]]
         self.assertEqual(groups, expected_groups)
